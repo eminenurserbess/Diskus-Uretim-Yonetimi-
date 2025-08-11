@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bekleyen Görevler - Diskus Üretim Yönetimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      /** 1.KISIM */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fa;
+        color: #2d3748;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        /* Masaüstü için ek bir padding eklemeye gerek yok, varsayılan 20px body padding'i yeterli */
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        /* Resimdeki masaüstü görünümü için flex-wrap kullanmıyoruz, mobilde halledeceğiz */
+      }
+
+      .header h1 {
+        font-size: 28px;
+        color: #2d3748;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header h1 i {
+        font-size: 24px;
+        color: #718096;
+      }
+
+      .add-tank-btn {
+        background: #1a73e8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap; /* Buton metninin sarmasını engeller */
+      }
+
+      .add-tank-btn:hover {
+        background: #043779;
+      }
+
+      .summary {
+        color: #718096;
+        margin-bottom: 20px;
+        font-size: 16px;
+        /* Masaüstünde solda kalsın */
+      }
+
+      /** 2. KISIM TANK BİLGİLERİ */
+      .stats-container {
+        display: flex;
+        flex-wrap: wrap; /* Kartların sarmasına izin ver */
+        gap: 15px;
+        margin-bottom: 30px;
+        justify-content: flex-start; /* Masaüstünde solda başlasın */
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        flex: 1; /* Esnekliği koru */
+        min-width: 150px;
+        max-width: 280px; /* Her kart için maksimum genişlik ekleyerek daha dengeli bir dağılım sağla */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        border: 1px solid #edf2f7;
+      }
+
+      .stat-card h3 {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 10px;
+      }
+
+      .stat-card .count {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2d3748;
+      }
+
+      .stat-card:nth-child(2) .count {
+        color: #3182ce; /* Bekleyen */
+      }
+      .stat-card:nth-child(3) .count {
+        color: #e00017; /* Geciken */
+      }
+      .stat-card:nth-child(4) .count {
+        color: #36a81a; /* Tamamlanan */
+      }
+
+      /** 3. KISIM FİLTRELEME */
+      .filter-row {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 30px;
+      }
+
+      .filter-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border: 1px solid #edf2f7;
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 100%;
+        min-height: 55px;
+        /* Masaüstü için flex-wrap kullanmıyoruz, mobilde halledeceğiz */
+      }
+
+      .filter-section i {
+        color: #718096;
+        font-size: 16px;
+      }
+
+      .filter-section select {
+        width: 160px; /* Masaüstünde select'ler kısa kalsın */
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      .filter-section select:hover {
+        border-color: #a0aec0;
+      }
+
+      .filter-section select:focus {
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+      }
+
+      /** 4. KISIM GÖREV EKLE BUTONU (Modal) */
+      .task-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Masaüstünde padding'e gerek yok, ortalama yeterli */
+      }
+
+      .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        width: 100%;
+        max-width: 550px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        font-family: "Segoe UI", sans-serif;
+        position: relative;
+        max-height: 90vh; /* Modal yüksekliğini sınırlayarak mobil cihazlarda taşmayı engeller */
+        overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu gösterir */
+      }
+
+      .close {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="time"],
+      select,
+      textarea,
+      input[type="number"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        transition: border 0.2s ease;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      .form-row-two-col {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 16px;
+        /* Masaüstü için flex-wrap kullanmıyoruz */
+      }
+
+      .form-row-three-col {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 16px;
+        /* Masaüstü için flex-wrap kullanmıyoruz */
+      }
+
+      .form-group {
+        flex: 1;
+      }
+
+      .form-group input,
+      .form-group select {
+        margin-bottom: 0;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        margin: 10px 0 20px;
+      }
+
+      .example-box {
+        margin: 8px 0 16px;
+        font-size: 13px;
+        color: #174491;
+        background-color: #e6f0ff;
+        padding: 8px;
+        border-radius: 5px;
+      }
+
+      .modal-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        /* Masaüstü için dikey istiflemeye gerek yok */
+      }
+
+      .modal-button,
+      .modal-submit {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.2s ease;
+      }
+
+      .modal-button {
+        background-color: #fff;
+        color: #333;
+        border: 1px solid #ccc;
+      }
+
+      .modal-button:hover {
+        background-color: #f2f2f2;
+      }
+
+      .modal-submit {
+        background-color: #3b5bff;
+        color: #fff;
+      }
+
+      .modal-submit:hover {
+        background-color: #3049d4;
+      }
+
+      /** SADECE MOBİL İÇİN GEÇERLİ STİLLER (768px ve altı) */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px; /* Mobil cihazlarda sayfa kenarlarında boşluk bırak */
+        }
+
+        .container {
+          padding: 0 5px; /* Mobil cihazlarda container içinde de boşluk bırak */
+        }
+
+        .header {
+          flex-direction: column; /* Başlık ve butonu alt alta sırala */
+          align-items: flex-start; /* Sola hizala */
+          gap: 15px; /* Başlık ve buton arasına boşluk koy */
+        }
+
+        .header h1 {
+          font-size: 24px;
+          margin-bottom: 0; /* Üstteki gap yeterli */
+        }
+
+        .add-tank-btn {
+          width: 100%; /* Butonu tam genişlik yap */
+          justify-content: center; /* Buton içeriğini ortala */
+          padding: 12px; /* Butonun dokunma alanını büyüt */
+        }
+
+        .summary {
+          text-align: center; /* Özeti ortala */
+          font-size: 15px;
+        }
+
+        .stats-container {
+          flex-direction: column; /* İstatistik kartlarını alt alta sırala */
+          align-items: center; /* Ortala */
+        }
+
+        .stat-card {
+          width: 100%; /* Kartları tam genişlik yap */
+          max-width: 350px; /* Mobil cihazlarda çok genişlemesini engelle */
+        }
+
+        .filter-section {
+          flex-direction: column; /* Filtreleri alt alta sırala */
+          align-items: flex-start; /* Sola hizala */
+          padding: 10px; /* Filtre alanının iç boşluğunu azalt */
+        }
+
+        .filter-section select {
+          width: 100%; /* Select'leri tam genişlik yap */
+          margin-bottom: 10px; /* Select'ler arasına boşluk koy */
+        }
+
+        .filter-section i {
+          margin-bottom: 10px; /* Filtre ikonu altına boşluk koy */
+        }
+
+        /* Modal içindeki iki ve üç sütunlu form yapılarını mobil için alt alta getir */
+        .form-row-two-col,
+        .form-row-three-col {
+          flex-direction: column; /* Sütunları alt alta sırala */
+          gap: 0; /* Alt alta sıralandığında gap'i kaldır */
+        }
+
+        .form-group {
+          width: 100%; /* Form gruplarını tam genişlik yap */
+          margin-bottom: 16px; /* Alt alta gelen inputlar arasına boşluk koy */
+        }
+
+        .form-group input,
+        .form-group select {
+          margin-bottom: 0; /* Zaten form-group'ta margin var */
+        }
+
+        /* Modal düğmelerini mobil için alt alta getir */
+        .modal-buttons {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .modal-content {
+          padding: 20px; /* Modal içindeki boşluğu azalt */
+        }
+
+        .close {
+          top: 10px;
+          right: 10px;
+        }
+      }
+
+      /* Daha küçük mobil ekranlar için ek ayarlamalar */
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 22px;
+        }
+
+        .add-tank-btn {
+          font-size: 14px;
+          padding: 10px 15px;
+        }
+
+        .modal-content {
+          margin: 10px; /* Çok küçük ekranlarda modalın kenarlara çok yapışmasını engelle */
+          padding: 15px; /* Daha da azaltılmış modal boşluğu */
+        }
+
+        h2 {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 1.KISIM -->
+      <div class="header">
+        <h1>
+          <a href="index.html"><i class="fas fa-arrow-left"></i></a>
+          Bekleyen Görevler
+        </h1>
+        <button class="add-tank-btn" id="openTaskModalBtn">
+          <i class="fas fa-plus"></i>
+          Görev Ekle
+        </button>
+      </div>
+      <p class="summary">0 görev - 5 bekleyen - 1 geciken</p>
+
+      <!-- 2. KISIM TANK BİLGİLERİ -->
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Toplam Görev</h3>
+          <div class="count">7</div>
+        </div>
+        <div class="stat-card">
+          <h3>Bekleyen</h3>
+          <div class="count">7</div>
+        </div>
+        <div class="stat-card">
+          <h3>Geciken</h3>
+          <div class="count">2</div>
+        </div>
+        <div class="stat-card">
+          <h3>Tamamlanan</h3>
+          <div class="count">0</div>
+        </div>
+      </div>
+
+      <!-- 3. KISIM FİLTRELEME -->
+      <div class="filter-row">
+        <div class="filter-section">
+          <i class="fas fa-filter"></i>
+          <select>
+            <option>Tüm Görevler</option>
+            <option selected>Bekleyen</option>
+            <option>Geciken</option>
+            <option>Su Değişimi</option>
+          </select>
+
+          <select>
+            <option>Tüm Tanklar</option>
+            <option>Genel Görevler</option>
+            <option>Ana Üretim Tankı</option>
+            <option>Boylandırma Tank 1</option>
+            <option>Karantina Tank</option>
+            <option>Ana Tank 2 (Yeni Kurulum)</option>
+            <option>Boylandırma Tank 2</option>
+            <option>Sergi Tankı</option>
+            <option>Boş Tank (Hazırlık)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 4. KISIM GÖREV EKLE BUTONU -->
+      <div id="taskModal" class="task-modal" style="display: none">
+        <div class="modal-content">
+          <span class="close" onclick="document.getElementById('taskModal').style.display='none'">&times;</span>
+          <h2>Yeni Görev Ekle</h2>
+          <form>
+            <label for="taskTitle">Başlık</label>
+            <input type="text" id="taskTitle" placeholder="" />
+
+            <label for="taskDescription">Açıklama</label>
+            <textarea id="taskDescription" rows="4" placeholder=""></textarea>
+
+            <div class="form-row-two-col">
+              <div class="form-group">
+                <label for="taskTank">Tank</label>
+                <select id="taskTank">
+                  <option>Genel Görev</option>
+                  <option>Ana Üretim Tankı</option>
+                  <option>Boylandırma Tank 1</option>
+                  <option>Karantina Tank</option>
+                  <option>Ana Tank 2 (Yeni Kurulum)</option>
+                  <option>Boylandırma Tank 2</option>
+                  <option>Sergi Tankı</option>
+                  <option>Boş Tank (Hazırlık)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="taskCategory">Kategori</label>
+                <select id="taskCategory">
+                  <option>Diğer</option>
+                  <option>Yemleme</option>
+                  <option>Bakım</option>
+                  <option>İzleme</option>
+                  <option>Üreme</option>
+                  <option>Azot Döngüsü</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-three-col">
+              <div class="form-group">
+                <label for="taskPriority">Öncelik</label>
+                <select id="taskPriority">
+                  <option>Orta</option>
+                  <option>Düşük</option>
+                  <option>Yüksek</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="taskDate">Tarih</label>
+                <input type="date" id="taskDate" value="2025-06-27" />
+              </div>
+              <div class="form-group">
+                <label for="taskTime">Saat</label>
+                <input type="time" id="taskTime" value="09:00" />
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input
+                type="checkbox"
+                id="recurringTask"
+                onclick="document.getElementById('recurringOptions').style.display = this.checked ? 'block' : 'none';"
+              />
+              <label for="recurringTask">Tekrarlanan görev</label>
+            </div>
+
+            <div id="recurringOptions" style="display: none">
+              <div class="form-row-two-col">
+                <div class="form-group">
+                  <label for="repeatType">Tekrarlama Türü</label>
+                  <select id="repeatType" class="form-control">
+                    <option>Günlük</option>
+                    <option>Saatlik</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="repeatInterval">Aralık</label>
+                  <input type="number" id="repeatInterval" class="form-control" value="1" min="1" />
+                </div>
+              </div>
+
+              <div class="example-box">
+                <strong>Örnek:</strong>
+                Günlük tekrarlama için 1 gün arayla görev tekrarlanır.
+              </div>
+            </div>
+
+            <div class="modal-buttons">
+              <button
+                type="button"
+                class="modal-button"
+                onclick="document.getElementById('taskModal').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="modal-submit">Ekle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 5. KISIM GÖREVLER VE GÖREV YOKSA  -->
+      <div id="gorevListesi">
+        <!-- Görevler burada olacak -->
+      </div>
+
+      <div id="gorevYokMesaji" style="display: none; text-align: center; margin-top: 100px">
+        <img src="image/task.png" alt="Görev bulunmuyor" width="60" height="60" />
+        <h3 style="color: #374151; font-size: 18px; margin-top: 16px">Görev bulunmuyor</h3>
+        <p style="color: #6b7280; font-size: 14px">Bu filtreye uygun görev bulunamadı.</p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // GÖREV EKLE BUTONU
+        const taskModal = document.getElementById("taskModal");
+        const openTaskModalBtn = document.getElementById("openTaskModalBtn");
+        const closeTaskModalSpan = taskModal.querySelector(".close");
+        const cancelTaskModalBtn = taskModal.querySelector(".modal-button");
+
+        if (openTaskModalBtn) {
+          openTaskModalBtn.onclick = () => (taskModal.style.display = "flex");
+        }
+
+        if (closeTaskModalSpan) {
+          closeTaskModalSpan.onclick = () => (taskModal.style.display = "none");
+        }
+
+        if (cancelTaskModalBtn) {
+          cancelTaskModalBtn.onclick = () => (taskModal.style.display = "none");
+        }
+
+        window.onclick = function (event) {
+          if (event.target === tankModal) {
+            tankModal.style.display = "none";
+          }
+          if (event.target === taskModal) {
+            taskModal.style.display = "none";
+          }
+        };
+
+        // GÖREV EKLE FORMU İŞLEMLERİ
+        const taskForm = document.querySelector("#taskModal form");
+        if (taskForm) {
+          taskForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const task = {
+              title: document.getElementById("taskTitle").value.trim(),
+              description: document.getElementById("taskDescription").value.trim(),
+              tank: document.getElementById("taskTank").value,
+              category: document.getElementById("taskCategory").value,
+              priority: document.getElementById("taskPriority").value,
+              date: document.getElementById("taskDate").value,
+              time: document.getElementById("taskTime").value,
+              isRecurring: document.getElementById("recurringTask").checked,
+            };
+
+            console.log("Yeni Görev:", task);
+
+            taskForm.reset();
+            taskModal.style.display = "none";
+          });
+        }
+
+        // görev ekle tekrarlanan görev
+        document.getElementById("recurringTask").addEventListener("change", function () {
+          const options = document.getElementById("recurringOptions");
+          options.style.display = this.checked ? "block" : "none";
+        });
+
+        // Bu kodu görevleri listeledikten sonra çağır
+        const gorevListesi = document.getElementById("gorevListesi");
+        const gorevYokMesaji = document.getElementById("gorevYokMesaji");
+
+        if (gorevListesi.children.length === 0) {
+          gorevYokMesaji.style.display = "block";
+        } else {
+          gorevYokMesaji.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

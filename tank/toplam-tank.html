@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tüm Tanklar - Diskus Üretim Yönetimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/toplam-tank.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>
+          <a href="index.html"><i class="fas fa-arrow-left"></i></a>
+          Tüm Tanklar
+        </h1>
+        <button class="add-tank-btn" id="openTankModalBtn">
+          <i class="fas fa-plus"></i>
+          Tank Ekle
+        </button>
+      </div>
+
+      <div class="overview-section">
+        <p class="summary">5 tank bulundu</p>
+
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3>Toplam</h3>
+            <div class="count">5</div>
+          </div>
+          <div class="stat-card">
+            <h3>Üreme</h3>
+            <div class="count">1</div>
+          </div>
+          <div class="stat-card">
+            <h3>Boylandırma</h3>
+            <div class="count">1</div>
+          </div>
+          <div class="stat-card">
+            <h3>Ana Tank</h3>
+            <div class="count">1</div>
+          </div>
+          <div class="stat-card">
+            <h3>Boş</h3>
+            <div class="count">0</div>
+          </div>
+          <div class="stat-card">
+            <h3>Karantina</h3>
+            <div class="count">2</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-container">
+        <div class="filter-section">
+          <i class="fas fa-filter"></i>
+          <select id="tankFilter">
+            <option value="tum">Tüm Tanklar</option>
+            <option value="ureme">Üreme Tankları</option>
+            <option value="boylandirma">Boylandırma Tankları</option>
+            <option value="ana">Ana Tanklar</option>
+            <option value="bos">Boş Tanklar</option>
+            <option value="karantina">Karantina Tankları</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tank-grid">
+        <div class="tank-card">
+          <div class="tank-card-header">
+            <h2>Ana Üretim Tankı</h2>
+            <i class="fas fa-star favorite-icon favorited"></i>
+          </div>
+          <span class="tank-type-badge ureme">Üreme</span>
+          <div class="tank-details">
+            <div class="detail-item">
+              <h4>Kapasite:</h4>
+              <p>300L</p>
+            </div>
+            <div class="detail-item next-water-change">
+              <h4>
+                <i class="far fa-calendar-alt"></i>
+                Sonraki su değişimi:
+              </h4>
+              <p>26 Haz</p>
+            </div>
+            <div class="breeding-pair-section">
+              <h4>Üreme Çifti</h4>
+              <div class="breeding-pair-images">
+                <div class="breeding-pair-item">
+                  <img
+                    src="https://placehold.co/80x80/d3d3d3/ffffff?text=Discus"
+                    onerror="this.onerror=null;this.src='https://placehold.co/80x80/d3d3d3/ffffff?text=Resim+Yok';"
+                    alt="Kral Mavi Discus"
+                  />
+                  <p>
+                    <i class="fas fa-mars"></i>
+                    Kral Mavi
+                  </p>
+                </div>
+                <div class="breeding-pair-item">
+                  <img
+                    src="https://placehold.co/80x80/d3d3d3/ffffff?text=Discus"
+                    onerror="this.onerror=null;this.src='https://placehold.co/80x80/d3d3d3/ffffff?text=Resim+Yok';"
+                    alt="Kraliçe Kırmızı Discus"
+                  />
+                  <p>
+                    <i class="fas fa-venus"></i>
+                    Kraliçe Kırmızı
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tank-actions">
+            <button class="details-btn" onclick="window.location.href='ureme-tank-detay.html'">Detaylar</button>
+            <button class="edit-icon-btn"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+        </div>
+
+        <div class="tank-card">
+          <div class="tank-card-header">
+            <h2>Boylandırma Tank 1</h2>
+            <i class="far fa-star favorite-icon"></i>
+          </div>
+          <span class="tank-type-badge boylandirma">Boylandırma</span>
+          <div class="tank-details">
+            <div class="detail-item">
+              <h4>Kapasite:</h4>
+              <p>80L</p>
+            </div>
+            <div class="detail-item next-water-change">
+              <h4>
+                <i class="far fa-calendar-alt"></i>
+                Sonraki su değişimi:
+              </h4>
+              <p>26 Haz</p>
+            </div>
+            <div class="detail-item">
+              <h4>Yavru Bilgisi:</h4>
+              <p class="child-info">150 adet - 25 günlük</p>
+            </div>
+          </div>
+          <div class="tank-actions">
+            <button class="details-btn" onclick="window.location.href='boylandirma-tank-detay.html'">Detaylar</button>
+            <button class="edit-icon-btn"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+        </div>
+
+        <div class="tank-card">
+          <div class="tank-card-header">
+            <h2>Karantina Tank</h2>
+            <i class="far fa-star favorite-icon"></i>
+          </div>
+          <span class="tank-type-badge karantina">Karantina</span>
+          <div class="tank-details">
+            <div class="detail-item">
+              <h4>Kapasite:</h4>
+              <p>40L</p>
+            </div>
+            <div class="detail-item next-water-change">
+              <h4>
+                <i class="far fa-calendar-alt"></i>
+                Sonraki su değişimi:
+              </h4>
+              <p>26 Haz</p>
+            </div>
+          </div>
+          <div class="tank-actions">
+            <button class="details-btn" onclick="window.location.href='karantina-tank-detay.html'">Detaylar</button>
+            <button class="edit-icon-btn"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+        </div>
+
+        <div class="tank-card">
+          <div class="tank-card-header">
+            <h2>Ana Tank 2 (Yeni Kurulum)</h2>
+            <i class="far fa-star favorite-icon"></i>
+          </div>
+          <span class="tank-type-badge ana-tank">Ana Tank</span>
+          <div class="tank-details">
+            <div class="detail-item">
+              <h4>Kapasite:</h4>
+              <p>250L</p>
+            </div>
+            <div class="detail-item next-water-change">
+              <h4>
+                <i class="far fa-calendar-alt"></i>
+                Sonraki su değişimi:
+              </h4>
+              <p>2 Tem</p>
+            </div>
+          </div>
+          <div class="tank-actions">
+            <button class="details-btn" onclick="window.location.href='ana-tank-detay.html'">Detaylar</button>
+            <button class="edit-icon-btn"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+        </div>
+
+        <div class="tank-card">
+          <div class="tank-card-header">
+            <h2>Boş Tank (Hazırlık)</h2>
+            <i class="far fa-star favorite-icon"></i>
+          </div>
+          <span class="tank-type-badge bos">Boş</span>
+          <div class="tank-details">
+            <div class="detail-item">
+              <h4>Kapasite:</h4>
+              <p>100L</p>
+            </div>
+            <div class="detail-item next-water-change">
+              <h4>
+                <i class="far fa-calendar-alt"></i>
+                Sonraki su değişimi:
+              </h4>
+              <p>2 Tem</p>
+            </div>
+          </div>
+          <div class="tank-actions">
+            <button class="details-btn" onclick="window.location.href='bos-tank-detay.html'">Detaylar</button>
+            <button class="edit-icon-btn"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tankModal" class="modal">
+        <div class="modal-content">
+          <span onclick="document.getElementById('tankModal').style.display='none'" class="close">&times;</span>
+          <h2>Yeni Tank Ekle</h2>
+          <form>
+            <label for="tankName">Tank Adı:</label>
+            <input type="text" id="tankName" placeholder="Örn: Ana Tank, Larva Tank 1..." />
+
+            <label for="capacity">Kapasite (Litre):</label>
+            <input type="number" id="capacity" placeholder="Örn: 200" />
+
+            <label for="tankType">Tank Türü:</label>
+            <select id="tankType">
+              <option value="empty" selected>Boş</option>
+              <option value="main">Ana Tank</option>
+              <option value="breeding">Üreme</option>
+              <option value="growing">Boylandırma</option>
+              <option value="quarantine">Karantina</option>
+            </select>
+            <div
+              id="kurulumDurumu"
+              style="
+                display: none;
+                border: 1px solid #cbd5e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin-top: 10px;
+                background-color: #f8fafc;
+              "
+            >
+              <strong>Tank Kurulum Durumu:</strong>
+              <div style="margin-top: 10px">
+                <label>
+                  <input type="radio" name="kurulum" value="yeni" checked />
+                  <span style="margin-left: 5px">
+                    Yeni Kurulum
+                    <small style="color: gray">(Azot döngüsü henüz oturmamış, sıfırdan başlayacak)</small>
+                  </span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="kurulum" value="kurulu" />
+                  <span style="margin-left: 5px">
+                    Kurulu Tank
+                    <small style="color: gray">(Azot döngüsü oturmuş, balık mevcut)</small>
+                  </span>
+                </label>
+              </div>
+              <div
+                style="
+                  margin-top: 10px;
+                  font-size: 13px;
+                  color: #4a5568;
+                  background-color: #bfd2f0;
+                  padding: 8px;
+                  border-radius: 5px;
+                "
+              >
+                💡Bilgi: Yeni kurulum seçerseniz azot döngüsü görevleri, kurulu tank seçerseniz rutin bakım görevleri
+                otomatik oluşturulur.
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button
+                type="button"
+                class="modal-button"
+                onclick="document.getElementById('tankModal').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="modal-submit">Tank Ekle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const favoriteTab = document.querySelector(".tab-navigation button:nth-child(1)");
+        const tasksTab = document.querySelector(".tab-navigation button:nth-child(2)");
+        const favoriteContent = document.querySelector(".tab-content");
+        const taskContent = document.querySelector(".task-section");
+
+        if (favoriteContent && taskContent) {
+          favoriteContent.style.display = "block";
+          taskContent.style.display = "none";
+
+          if (favoriteTab) {
+            favoriteTab.addEventListener("click", () => {
+              favoriteTab.classList.add("active");
+              tasksTab.classList.remove("active");
+              favoriteContent.style.display = "block";
+              taskContent.style.display = "none";
+            });
+          }
+
+          if (tasksTab) {
+            tasksTab.addEventListener("click", () => {
+              tasksTab.classList.add("active");
+              favoriteTab.classList.remove("active");
+              taskContent.style.display = "block";
+              favoriteContent.style.display = "none";
+            });
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkFavorites = () => {
+          const favoritesList = document.querySelector(".favorite-tanks-list");
+          const noFavorites = document.querySelector(".no-favorites-container");
+
+          if (favoritesList && noFavorites) {
+            if (favoritesList.children.length > 0) {
+              noFavorites.style.display = "none";
+            } else {
+              noFavorites.style.display = "block";
+            }
+          }
+        };
+        checkFavorites();
+      });
+
+      // filtrelemeye göre sayfaya yönlendirme
+      document.getElementById("tankFilter").addEventListener("change", function () {
+        const selectedValue = this.value;
+
+        // Değer - sayfa eşlemesi
+        const pageMap = {
+          tum: "toplam-tank.html",
+          ureme: "ureme-tank.html",
+          boylandirma: "boylandirma-tank.html",
+          ana: "ana-tank.html",
+          bos: "bos-tank.html",
+          karantina: "karantina-tank.html",
+        };
+
+        // Yönlendirme
+        if (pageMap[selectedValue]) {
+          window.location.href = pageMap[selectedValue];
+        }
+      });
+
+      // tank ekle ana tank seçimi
+      document.getElementById("tankType").addEventListener("change", function () {
+        const kurulumDiv = document.getElementById("kurulumDurumu");
+        if (this.value === "main") {
+          kurulumDiv.style.display = "block";
+        } else {
+          kurulumDiv.style.display = "none";
+        }
+      });
+
+      // TANK EKLE BUTONU
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("tankModal");
+        const openModalBtn = document.getElementById("openTankModalBtn");
+        const closeModalSpan = document.getElementsByClassName("close")[0];
+        const cancelModalBtn = modal.querySelector(".modal-button");
+
+        if (openModalBtn) {
+          openModalBtn.onclick = function () {
+            modal.style.display = "flex";
+          };
+        }
+
+        if (closeModalSpan) {
+          closeModalSpan.onclick = function () {
+            modal.style.display = "none";
+          };
+        }
+
+        if (cancelModalBtn) {
+          cancelModalBtn.onclick = function () {
+            modal.style.display = "none";
+          };
+        }
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

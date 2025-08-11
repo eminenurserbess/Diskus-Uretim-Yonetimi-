@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ana Tank - Diskus Yönetimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="css/ana-tank-detay.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 1. KISIM -->
+      <div class="header">
+        <h1>
+          <a href="index.html" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+          Ana Tank
+        </h1>
+        <div class="header-buttons">
+          <button class="action-btn blue-btn" id="openEditTankModalBtn">
+            <i class="fas fa-edit"></i>
+            Düzenle
+          </button>
+          <button class="action-btn red-btn" id="openDeleteModalBtn">
+            <i class="fas fa-trash-alt"></i>
+            Sil
+          </button>
+        </div>
+      </div>
+      <p class="tank-capacity">300L Kapasite</p>
+
+      <!-- 2. KISIM TANK PARAMETRE KARTLARI -->
+      <div class="stats-container parameter-cards">
+        <div class="stat-card parameter-card">
+          <div class="param-details">
+            <h3>Sıcaklık</h3>
+            <div class="count" style="color: #e74c3c">29.3°C</div>
+          </div>
+          <div class="param-icon-right"><i class="fas fa-thermometer-half" style="color: #e74c3c"></i></div>
+        </div>
+        <div class="stat-card parameter-card">
+          <div class="param-details">
+            <h3>pH</h3>
+            <div class="count" style="color: #3498db">7.4</div>
+          </div>
+          <div class="param-icon-right"><i class="fas fa-wave-square" style="color: #3498db"></i></div>
+        </div>
+        <div class="stat-card parameter-card">
+          <div class="param-details">
+            <h3>TDS</h3>
+            <div class="count" style="color: #299f5a">116.1</div>
+          </div>
+          <div class="param-icon-right"><i class="fas fa-tint" style="color: #2ecc71"></i></div>
+        </div>
+        <div class="stat-card parameter-card">
+          <div class="param-details">
+            <h3>ORP</h3>
+            <div class="count" style="color: #9b59b6">268.5</div>
+          </div>
+          <div class="param-icon-right"><i class="fas fa-fish" style="color: #9b59b6"></i></div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <!-- 3. KISIM NAVİGASYON SEKMELERİ -->
+        <div class="tab-navigation">
+          <button class="tab active" onclick="showTab('genel-bakis', this)">
+            <i class="fas fa-fish"></i>
+            Genel Bakış
+          </button>
+          <button class="tab" onclick="showTab('su-parametreleri', this)">
+            <i class="fas fa-thermometer-half"></i>
+            Su Parametreleri
+          </button>
+          <button class="tab" onclick="showTab('yemleme', this)">
+            <i class="fas fa-wave-square"></i>
+            Yemleme
+          </button>
+          <button class="tab" onclick="showTab('bakim', this)">
+            <i class="fas fa-tint"></i>
+            Bakım
+          </button>
+          <button class="tab" onclick="showTab('gorevler', this)">
+            <i class="fas fa-tasks"></i>
+            Görevler
+            <span class="badge">2</span>
+          </button>
+          <button class="tab" onclick="showTab('azot-dongusu', this)">
+            <i class="fas fa-dna"></i>
+            Azot Döngüsü
+          </button>
+        </div>
+
+        <!-- 4. KISIM GENEL BAKIŞ  -->
+        <div class="main-content-area active">
+          <div id="genel-bakis" class="tab-content active">
+            <div class="content-row">
+              <!-- Tank Durumu Kartı -->
+              <div class="content-card tank-status-card">
+                <h3>Tank Durumu</h3>
+                <div class="status-item">
+                  <span class="label">Durum:</span>
+                  <span class="value">Main</span>
+                </div>
+                <div class="status-item">
+                  <span class="label">Son Su Değişimi:</span>
+                  <span class="value">8 Tem 2025 10:49</span>
+                </div>
+                <div class="status-item">
+                  <span class="label">Sonraki Su Değişimi:</span>
+                  <span class="value">10 Tem 2025 10:49</span>
+                </div>
+              </div>
+
+              <div class="breeding-pair-wrapper"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. KISIM SU PARAMETRELERİ  -->
+        <div id="su-parametreleri" class="tab-content">
+          <div class="page-content">
+            <div class="page-header">
+              <h2>Su Parametreleri</h2>
+              <button class="add-parameter-btn" id="openParemetreEkle">
+                <i class="fas fa-plus"></i>
+                Parametre Ekle
+              </button>
+            </div>
+
+            <div class="charts-grid">
+              <div class="chart-card">
+                <h3>Sıcaklık (°C)</h3>
+                <div class="chart-placeholder">
+                  <div class="chart-line red-line"></div>
+                  <div class="min-val">28.1°C</div>
+                  <div class="max-val">29.6°C</div>
+                </div>
+                <span class="last-measure">Son 15 ölçüm</span>
+              </div>
+
+              <div class="chart-card">
+                <h3>pH</h3>
+                <div class="chart-placeholder">
+                  <div class="chart-line blue-line"></div>
+                  <div class="min-val">6.0</div>
+                  <div class="max-val">7.5</div>
+                </div>
+                <span class="last-measure">Son 15 ölçüm</span>
+              </div>
+
+              <div class="chart-card">
+                <h3>TDS (ppm)</h3>
+                <div class="chart-placeholder">
+                  <div class="chart-line green-line"></div>
+                  <div class="min-val">81.0 ppm</div>
+                  <div class="max-val">119.9 ppm</div>
+                </div>
+                <span class="last-measure">Son 15 ölçüm</span>
+              </div>
+
+              <div class="chart-card">
+                <h3>ORP (mV)</h3>
+                <div class="chart-placeholder">
+                  <div class="chart-line purple-line"></div>
+                  <div class="min-val">207.3 mV</div>
+                  <div class="max-val">293.9 mV</div>
+                </div>
+                <span class="last-measure">Son 15 ölçüm</span>
+              </div>
+            </div>
+
+            <div class="recent-measurements">
+              <h3>Son Ölçümler</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tarih</th>
+                    <th>Sıcaklık</th>
+                    <th>pH</th>
+                    <th>TDS</th>
+                    <th>ORP</th>
+                    <th>İşlemler</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>27 Haz</td>
+                    <td>
+                      <span class="value-badge success">
+                        <i class="fas fa-check-circle"></i>
+                        29.3°C
+                      </span>
+                    </td>
+                    <td>
+                      <span class="value-badge danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        7.4
+                      </span>
+                    </td>
+                    <td>
+                      <span class="value-badge success">
+                        <i class="fas fa-check-circle"></i>
+                        116.1 ppm
+                      </span>
+                    </td>
+                    <td>
+                      <span class="value-badge success">
+                        <i class="fas fa-check-circle"></i>
+                        268.5 mV
+                      </span>
+                    </td>
+                    <td class="actions">
+                      <a href="#" class="fa-solid fa-pen-to-square edit-icon" id="editButton"></a>
+                      <!-- düzenle butonu su parametreleri Modal -->
+                      <div class="modal-edit" id="editModal">
+                        <div class="modal-edit-content">
+                          <span class="modal-edit-close" id="closeModal">&times;</span>
+                          <h2>Su Parametresi Düzenle</h2>
+
+                          <div class="form-group">
+                            <div class="datetime-row">
+                              <div class="date-input-container">
+                                <label for="measurement-date">Tarih</label>
+                                <div class="input-with-icon">
+                                  <input type="date" id="measurement-date" value="2025-06-27" />
+                                  <i class="fas fa-calendar-alt"></i>
+                                </div>
+                              </div>
+
+                              <div class="time-input-container">
+                                <label for="measurement-time">Saat</label>
+                                <div class="input-with-icon">
+                                  <input type="time" id="measurement-time" value="18:30" />
+                                  <i class="fas fa-clock"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <h3>Temel Parametreler</h3>
+                            <div class="form-row">
+                              <div class="input-group">
+                                <label>Sıcaklık (°C)</label>
+                                <input type="number" value="28,044448948937116" />
+                              </div>
+                              <div class="input-group">
+                                <label>TDS (ppm)</label>
+                                <input type="number" value="82,98953194003903" />
+                              </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="input-group">
+                                <label>pH</label>
+                                <input type="number" value="6,754370317450035" />
+                              </div>
+                              <div class="input-group">
+                                <label>ORP (mV)</label>
+                                <input type="number" value="251,74375883843715" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <h3>Azot Döngüsü Parametreleri (Opsiyonel)</h3>
+                            <div class="form-row triple">
+                              <div class="input-group">
+                                <label>Amonyak (ppm)</label>
+                                <input type="number" value="0.00" />
+                              </div>
+                              <div class="input-group">
+                                <label>Nitrit (ppm)</label>
+                                <input type="number" value="0.00" />
+                              </div>
+                              <div class="input-group">
+                                <label>Nitrat (ppm)</label>
+                                <input type="number" value="0.00" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Notlar (Opsiyonel)</label>
+                            <textarea placeholder="Ek notlar..."></textarea>
+                          </div>
+
+                          <div class="modal-edit-buttons">
+                            <button class="cancel-parametre">İptal</button>
+                            <button class="update-parametre">Güncelle</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <a href="#" class="action-icon delete" id="deleteButton"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. KISIM YEMLEME  -->
+        <div id="yemleme" class="tab-content">
+          <div class="page-content">
+            <div class="page-header">
+              <h2>Yemleme Kayıtları</h2>
+              <button class="add-parameter-btn-yemleme" id="openYemlemeEkle">
+                <i class="fas fa-plus"></i>
+                Yemleme Ekle
+              </button>
+            </div>
+
+            <!-- Yemleme Kartı -->
+            <div class="card">
+              <div class="card-header">
+                <strong>Canlı Yem</strong>
+                <div class="card-actions">
+                  <span class="card-date">28 Haz 2025 14:21</span>
+                  <td class="actions">
+                    <a href="#" class="fa-solid fa-pen-to-square edit-icon" id="editButtonYemleme"></a>
+
+                    <!-- düzenle butonu yemleme parametreleri -->
+                    <div class="modal-edit" id="editModalYemleme">
+                      <div class="modal-edit-content">
+                        <span class="modal-edit-close" id="closeModalYemleme">&times;</span>
+                        <h2>Yemleme Kaydı Düzenle</h2>
+
+                        <div class="form-group">
+                          <div class="datetime-row">
+                            <div class="date-input-container">
+                              <label for="measurement-date">Tarih</label>
+                              <div class="input-with-icon">
+                                <input type="date" id="measurement-date" value="2025-06-27" />
+                                <i class="fas fa-calendar-alt"></i>
+                              </div>
+                            </div>
+
+                            <div class="time-input-container">
+                              <label for="measurement-time">Saat</label>
+                              <div class="input-with-icon">
+                                <input type="time" id="measurement-time" value="18:30" />
+                                <i class="fas fa-clock"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="form-row">
+                            <div class="input-group">
+                              <label>Yem Türü</label>
+                              <select>
+                                <option>Yem türü seçin...</option>
+                                <option>Artemia</option>
+                                <option>Mikro Yem</option>
+                                <option>Dondurulmuş Yem</option>
+                                <option>Granül Yem</option>
+                                <option>Canlı Yem</option>
+                                <option>Diğer</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div class="input-group">
+                              <label>Miktar</label>
+                              <input type="text" placeholder="örn: 1 çay kaşığı , 5ml, az miktarda..." />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Notlar (Opsiyonel)</label>
+                          <textarea placeholder="Ek notlar..."></textarea>
+                        </div>
+
+                        <div class="modal-edit-buttons">
+                          <button class="cancel-yemleme">İptal</button>
+                          <button class="update-yemleme" style="background-color: #4a9433">Güncelle</button>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="#" class="fa-solid fa-trash delete-icon" id="deleteButtonYemleme"></a>
+                  </td>
+                </div>
+              </div>
+              <div class="card-body">
+                <p>
+                  <span class="label">Miktar:</span>
+                  1 çay kaşığı
+                </p>
+                <p>İştahla yedi</p>
+              </div>
+            </div>
+            <div class="info-card">
+              <p>Henüz yemleme kaydı bulunmuyor.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. KISIM BAKIM  -->
+        <div id="bakim" class="tab-content">
+          <div class="page-content">
+            <div class="page-header">
+              <h2>Su Değişimi Kayıtları</h2>
+              <button class="add-parameter-btn-bakim" id="openBakimEkle">
+                <i class="fas fa-plus"></i>
+                Su Değişimi Ekle
+              </button>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <strong>%25 Su Değişimi</strong>
+                <div class="card-actions">
+                  <span class="card-date">28 Haz 2025 14:21</span>
+                  <td class="actions">
+                    <a href="#" class="fa-solid fa-pen-to-square edit-icon" id="editButtonBakim"></a>
+                    <!-- düzenle butonu bakım parametreleri -->
+                    <div class="modal-edit" id="editModalBakim">
+                      <div class="modal-edit-content">
+                        <span class="modal-edit-close" id="closeModalBakim">&times;</span>
+                        <h2>Su Değişimi Kaydı Düzenle</h2>
+
+                        <div class="form-group">
+                          <div class="datetime-row">
+                            <div class="date-input-container">
+                              <label for="measurement-date">Tarih</label>
+                              <div class="input-with-icon">
+                                <input type="date" id="measurement-date" value="2025-06-27" />
+                                <i class="fas fa-calendar-alt"></i>
+                              </div>
+                            </div>
+
+                            <div class="time-input-container">
+                              <label for="measurement-time">Saat</label>
+                              <div class="input-with-icon">
+                                <input type="time" id="measurement-time" value="18:30" />
+                                <i class="fas fa-clock"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="form-row">
+                            <div class="input-group">
+                              <label>Değiştirilen Su Yüzdesi (%)</label>
+                              <input type="number" placeholder="örn: 25" />
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div class="input-group">
+                              <label>Sebep</label>
+                              <select>
+                                <option>Sebep seçin...</option>
+                                <option>Rutin Bakım</option>
+                                <option>Yüksek Nitrat</option>
+                                <option>pH Düzenleme</option>
+                                <option>Bulanık Su</option>
+                                <option>Hastalık Önleme</option>
+                                <option>Yemleme Sonrası</option>
+                                <option>Diğer</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Notlar (Opsiyonel)</label>
+                          <textarea placeholder="Ek notlar..."></textarea>
+                        </div>
+
+                        <div class="modal-edit-buttons">
+                          <button class="cancel-bakim">İptal</button>
+                          <button class="update-bakim" style="background-color: #e03c3c">Güncelle</button>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="#" class="fa-solid fa-trash delete-icon" id="deleteButtonBakim"></a>
+                  </td>
+                </div>
+              </div>
+              <div class="card-body">
+                <p>
+                  <span class="label">Sebep:</span>
+                  Rutin bakım
+                </p>
+                <p>Su kalitesi mükemmel</p>
+              </div>
+            </div>
+            <div class="info-card">
+              <p>Henüz su değişimi kaydı bulunmuyor.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8.KISIM GÖREVLER -->
+        <div id="gorevler" class="tab-content">
+          <div class="page-content">
+            <div class="page-header">
+              <div class="basliklar">
+                <p>Tank Görevleri</p>
+                <p>Görev Yönetimi</p>
+              </div>
+
+              <div class="button-wrapper">
+                <div class="text-sm text-slate-600 status">0 bekleyen • 0 tamamlanan</div>
+                <button class="add-parameter-btn" id="openTaskModalBtn">
+                  <i class="fas fa-plus"></i>
+                  Görev Ekle
+                </button>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-section">
+                <i class="fas fa-filter"></i>
+                <select>
+                  <option>Tüm Görevler</option>
+                  <option>Bekleyen</option>
+                  <option>Tamamlanan</option>
+                  <option>Geciken</option>
+                </select>
+
+                <select>
+                  <option>Tüm Tanklar</option>
+                  <option>Genel Görevler</option>
+                  <option>Ana Üretim Tankı</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- GÖREV KARTI -->
+            <div class="task-header" style="display: flex; align-items: center; gap: 8px">
+              <strong>Üretim Tankı Su Değişimi</strong>
+              <span
+                style="
+                  background-color: #fee2e2;
+                  color: #b91c1c;
+                  padding: 2px 8px;
+                  border-radius: 12px;
+                  font-size: 12px;
+                "
+              >
+                Yüksek
+              </span>
+              <div class="task-actions" style="margin-left: auto">
+                <a href="#" class="fa-solid fa-pen-to-square edit-icon" id="editButtonGorev"></a>
+                <a href="#" class="fa-solid fa-trash delete-icon" id="deleteButtonGorev"></a>
+              </div>
+            </div>
+            <div class="task-body">
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                <div>
+                  <p style="margin: 4px 0; color: #334155">%50 su değişimi - üretim döneminde kritik</p>
+                  <div class="task-info">
+                    <span class="info-item">
+                      <i class="fas fa-calendar-alt"></i>
+                      <span>8 Tem 2025 14:16</span>
+                    </span>
+                    <span class="info-item">
+                      <i class="fas fa-map-pin konum" style="color: #ba3615"></i>
+                      <span>Ana Üretim Tankı</span>
+                    </span>
+                    <span class="info-item">
+                      <i class="fas fa-clock"></i>
+                      <span>Her 1 gün</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="info-card">
+              <p>Henüz görev bulunmuyor.</p>
+            </div>
+
+            <!-- düzenle butonu görev Modal -->
+            <div class="modal-edit" id="editModalGorev">
+              <div class="modal-edit-content">
+                <span class="modal-edit-close" id="closeModalGorev">&times;</span>
+                <h2>Görevi Düzenle</h2>
+
+                <div class="form-group">
+                  <label for="taskTitle">Başlık</label>
+                  <input type="text" id="taskTitle" value="Üretim Tankı Su Değişimi" />
+                </div>
+
+                <div class="form-group">
+                  <label for="taskDescription">Açıklama</label>
+                  <textarea id="taskDescription" rows="4">%50 su değişimi - üretim döneminde kritik</textarea>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class="input-group">
+                      <label for="taskTank">Tank</label>
+                      <select id="taskTank">
+                        <option>Genel Görev</option>
+                        <option selected>Ana Üretim Tankı</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label for="taskCategory">Kategori</label>
+                      <select id="taskCategory">
+                        <option>Diğer</option>
+                        <option>Yemleme</option>
+                        <option>Bakım</option>
+                        <option>İzleme</option>
+                        <option>Üreme</option>
+                        <option>Azot Döngüsü</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class="input-group">
+                      <label for="taskPriority">Öncelik</label>
+                      <select id="taskPriority">
+                        <option>Düşük</option>
+                        <option>Orta</option>
+                        <option selected>Yüksek</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label for="taskDate">Tarih</label>
+                      <div class="input-with-icon">
+                        <input type="date" id="taskDate" value="2025-07-08" />
+                        <i class="fas fa-calendar-alt"></i>
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <label for="taskTime">Saat</label>
+                      <div class="input-with-icon">
+                        <input type="time" id="taskTime" value="14:16" />
+                        <i class="fas fa-clock"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="custom-checkbox-group">
+                  <input type="checkbox" id="recurringTaskTwo" />
+                  <label for="recurringTaskTwo">Tekrarlanan görev</label>
+                </div>
+                <!-- Tekrarlama Ayarları (Başlangıçta Gizli) -->
+                <div id="recurringOptionsTwo" style="display: none; margin-top: 15px">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="repeatType">Tekrarlama Türü</label>
+                      <select id="repeatType">
+                        <option>Günlük</option>
+                        <option>Saatlik</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="repeatInterval">Aralık</label>
+                      <input type="number" id="repeatInterval" value="1" min="1" />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      margin-top: 8px;
+                      font-size: 13px;
+                      color: #174491;
+                      background-color: #e6f0ff;
+                      padding: 8px;
+                      border-radius: 5px;
+                    "
+                  >
+                    <strong>Örnek:</strong>
+                    Günlük tekrarlama için 1 gün arayla görev tekrarlanır.
+                  </div>
+                </div>
+
+                <div class="modal-edit-buttons">
+                  <button class="cancel-gorev">İptal</button>
+                  <button class="update-gorev">Güncelle</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. KISIM ÜRETİM DÖNGÜSÜ  -->
+        <!-- <div id="uretim-dongusu" class="tab-content">
+          <div class="page-content">
+            <div class="page-header">
+              <h2>Üretim Döngüsü</h2>
+              <button class="add-parameter-btn">
+                <i class="fas fa-plus"></i>
+                Döngü Ekle
+              </button>
+            </div>
+            <p>Üretim döngüsü ile ilgili detaylı bilgiler ve yavru kayıtları burada yer alacaktır.</p>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- PAREMETRE EKLE BUTONU -->
+      <div class="modal-edit" id="addModalParametre">
+        <div class="modal-edit-content">
+          <span class="modal-edit-close" id="closeAddModalParametre">&times;</span>
+          <h2>Su Parametresi Ekle</h2>
+
+          <div class="form-group">
+            <div class="datetime-row">
+              <div class="date-input-container">
+                <label for="measurement-date">Tarih</label>
+                <div class="input-with-icon">
+                  <input type="date" id="measurement-date" value="2025-06-27" />
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+
+              <div class="time-input-container">
+                <label for="measurement-time">Saat</label>
+                <div class="input-with-icon">
+                  <input type="time" id="measurement-time" value="18:30" />
+                  <i class="fas fa-clock"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h3>Temel Parametreler</h3>
+            <div class="form-row">
+              <div class="input-group">
+                <label>Sıcaklık (°C)</label>
+                <input type="number" value="28,044448948937116" />
+              </div>
+              <div class="input-group">
+                <label>TDS (ppm)</label>
+                <input type="number" value="82,98953194003903" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="input-group">
+                <label>pH</label>
+                <input type="number" value="6,754370317450035" />
+              </div>
+              <div class="input-group">
+                <label>ORP (mV)</label>
+                <input type="number" value="251,74375883843715" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Notlar (Opsiyonel)</label>
+            <textarea placeholder="Ek notlar..."></textarea>
+          </div>
+
+          <div class="modal-edit-buttons">
+            <button class="cancel-parametre">İptal</button>
+            <button class="update-parametre">Ekle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- YEMLEME EKLE BUTONU -->
+      <div class="modal-edit" id="addModalYemleme">
+        <div class="modal-edit-content">
+          <span class="modal-edit-close" id="closeAddModalYemleme">&times;</span>
+          <h2>Yemleme Kaydı Ekle</h2>
+
+          <div class="form-group">
+            <div class="datetime-row">
+              <div class="date-input-container">
+                <label for="measurement-date">Tarih</label>
+                <div class="input-with-icon">
+                  <input type="date" id="measurement-date" value="2025-06-27" />
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+
+              <div class="time-input-container">
+                <label for="measurement-time">Saat</label>
+                <div class="input-with-icon">
+                  <input type="time" id="measurement-time" value="18:30" />
+                  <i class="fas fa-clock"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="input-group">
+                <label>Yem Türü</label>
+                <select>
+                  <option>Yem türü seçin...</option>
+                  <option>Artemia</option>
+                  <option>Mikro Yem</option>
+                  <option>Dondurulmuş Yem</option>
+                  <option>Granül Yem</option>
+                  <option>Canlı Yem</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="input-group">
+                <label>Miktar</label>
+                <input type="text" placeholder="örn: 1 çay kaşığı , 5ml, az miktarda..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Notlar (Opsiyonel)</label>
+            <textarea placeholder="Ek notlar..."></textarea>
+          </div>
+
+          <div class="modal-edit-buttons">
+            <button class="cancel-yemleme">İptal</button>
+            <button class="save-yemleme">Kaydet</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SU DEĞİŞİMİ EKLE BUTONU -->
+      <div class="modal-edit" id="addModalBakim">
+        <div class="modal-edit-content">
+          <span class="modal-edit-close" id="closeAddModalBakim">&times;</span>
+          <h2>Su Değişimi Kaydı Ekle</h2>
+
+          <div class="form-group">
+            <div class="datetime-row">
+              <div class="date-input-container">
+                <label for="measurement-date">Tarih</label>
+                <div class="input-with-icon">
+                  <input type="date" id="measurement-date" value="2025-06-27" />
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+
+              <div class="time-input-container">
+                <label for="measurement-time">Saat</label>
+                <div class="input-with-icon">
+                  <input type="time" id="measurement-time" value="18:30" />
+                  <i class="fas fa-clock"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="input-group">
+                <label>Değiştirilen Su Yüzdesi (%)</label>
+                <input type="number" placeholder="örn: 25" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="input-group">
+                <label>Sebep</label>
+                <select>
+                  <option>Sebep seçin...</option>
+                  <option>Rutin Bakım</option>
+                  <option>Yüksek Nitrat</option>
+                  <option>pH Düzenleme</option>
+                  <option>Bulanık Su</option>
+                  <option>Hastalık Önleme</option>
+                  <option>Yemleme Sonrası</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Notlar (Opsiyonel)</label>
+            <textarea placeholder="Ek notlar..."></textarea>
+          </div>
+
+          <div class="modal-edit-buttons">
+            <button class="cancel-bakim">İptal</button>
+            <button class="save-bakim">Kaydet</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GÖREV EKLE BUTONU -->
+      <div id="taskModalAna" class="custom-task-modal">
+        <div class="custom-modal-content">
+          <span class="custom-modal-close" onclick="document.getElementById('taskModalAna').style.display='none'">
+            &times;
+          </span>
+          <h2>Yeni Görev Ekle</h2>
+          <form>
+            <div class="form-group">
+              <label for="taskTitle">Başlık</label>
+              <input type="text" id="taskTitle" placeholder="" />
+            </div>
+            <div class="form-group">
+              <label for="taskDescription">Açıklama</label>
+              <textarea id="taskDescription" rows="4" placeholder=""></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="taskTank">Tank</label>
+                  <select id="taskTank">
+                    <option>Genel Görev</option>
+                    <option>Ana Üretim Tankı</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <label for="taskCategory">Kategori</label>
+                  <select id="taskCategory">
+                    <option>Diğer</option>
+                    <option>Yemleme</option>
+                    <option>Bakım</option>
+                    <option>İzleme</option>
+                    <option>Üreme</option>
+                    <option>Azot Döngüsü</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="taskPriority">Öncelik</label>
+                  <select id="taskPriority">
+                    <option>Düşük</option>
+                    <option selected>Orta</option>
+                    <option>Yüksek</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="taskDate">Tarih</label>
+                  <div class="input-with-icon">
+                    <input type="date" id="taskDate" value="2025-06-28" />
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="taskTime">Saat</label>
+                  <div class="input-with-icon">
+                    <input type="time" id="taskTime" value="09:00" />
+                    <i class="fas fa-clock"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="custom-checkbox-group">
+              <input type="checkbox" id="recurringTask" />
+              <label for="recurringTask">Tekrarlanan görev</label>
+            </div>
+
+            <!-- Tekrarlama Ayarları (Başlangıçta Gizli) -->
+            <div id="recurringOptions" style="display: none; margin-top: 15px">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="repeatType">Tekrarlama Türü</label>
+                  <select id="repeatType">
+                    <option>Günlük</option>
+                    <option>Saatlik</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="repeatInterval">Aralık</label>
+                  <input type="number" id="repeatInterval" value="1" min="1" />
+                </div>
+              </div>
+              <div
+                style="
+                  margin-top: 1px;
+                  margin-bottom: 20px;
+                  font-size: 13px;
+                  color: #174491;
+                  background-color: #e6f0ff;
+                  padding: 8px;
+                  border-radius: 5px;
+                "
+              >
+                <strong>Örnek:</strong>
+                Günlük tekrarlama için 1 gün arayla görev tekrarlanır.
+              </div>
+            </div>
+
+            <div class="custom-modal-buttons">
+              <button
+                type="button"
+                class="custom-modal-button"
+                onclick="document.getElementById('taskModalAna').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="custom-modal-submit">Ekle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- (11) KISIM DÜZENLE BUTONU -->
+      <div id="editTankModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="document.getElementById('editTankModal')">&times;</span>
+          <h2>Tank Düzenle</h2>
+          <form>
+            <label for="editTankName">Tank Adı</label>
+            <input type="text" id="editTankName" value="Ana Tank" />
+
+            <label for="editTankCapacity">Kapasite (Litre)</label>
+            <input type="number" id="editTankCapacity" value="300" />
+
+            <div class="modal-buttons">
+              <button
+                type="button"
+                class="modal-button"
+                onclick="document.getElementById('editTankModal').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="modal-submit blue-submit-btn">Güncelle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- (12) KISIM SİL BUTONU -->
+      <div class="delete-modal-overlay hidden-modal">
+        <div class="delete-modal">
+          <div class="delete-modal-header">
+            <h3>Tank Silme Onayı</h3>
+            <button class="close-button" id="closeModalBtn">&times;</button>
+          </div>
+
+          <div class="delete-modal-content">
+            <p style="color: #71271e; font-weight: 600">"Ana Tankı" tankını silmek istediğinizden emin misiniz?</p>
+            <p>Bu işlem geri alınamaz ve aşağıdaki veriler de silinecek:</p>
+            <ul>
+              <li>Su parametreleri</li>
+              <li>Yemleme kayıtları</li>
+              <li>Su değişimi kayıtları</li>
+              <li>Yavru sayım kayıtları</li>
+              <li>Tank ile ilgili görevler</li>
+              <li>Fotoğraf albümü</li>
+            </ul>
+          </div>
+
+          <div class="delete-modal-footer">
+            <button class="cancel-button" id="cancelModalBtn">İptal</button>
+            <button class="delete-button">Tankı Sil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // SAYFALAR ARASI GEÇİŞ
+      function showTab(tabId, element) {
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((content) => {
+          content.style.display = "none";
+        });
+
+        const tabButtons = document.querySelectorAll(".tab-navigation button");
+        tabButtons.forEach((button) => {
+          button.classList.remove("active");
+        });
+
+        document.getElementById(tabId).style.display = "block";
+        element.classList.add("active");
+      }
+
+      // PAREMETRE EKLE
+      document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("openParemetreEkle"); // "Parametre Ekle" butonu
+        const modal = document.getElementById("addModalParametre"); // Modal kutusu
+        const closeBtn = document.getElementById("closeAddModalParametre"); // Kapatma (X) ikonu
+        const cancelBtn = modal.querySelector(".cancel-parametre"); // İptal butonu
+
+        // Açma
+        openBtn.addEventListener("click", function () {
+          modal.style.display = "block";
+        });
+
+        // Kapatma (X)
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Kapatma (İptal)
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Dışa tıklanınca kapat
+        window.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // YEMLEME EKLE
+      document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("openYemlemeEkle"); // "Parametre Ekle" butonu
+        const modal = document.getElementById("addModalYemleme"); // Modal kutusu
+        const closeBtn = document.getElementById("closeAddModalYemleme"); // Kapatma (X) ikonu
+        const cancelBtn = modal.querySelector(".cancel-yemleme"); // İptal butonu
+
+        // Açma
+        openBtn.addEventListener("click", function () {
+          modal.style.display = "block";
+        });
+
+        // Kapatma (X)
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Kapatma (İptal)
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Dışa tıklanınca kapat
+        window.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // SU DEĞİŞİMİ EKLE
+      document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("openBakimEkle"); // "Parametre Ekle" butonu
+        const modal = document.getElementById("addModalBakim"); // Modal kutusu
+        const closeBtn = document.getElementById("closeAddModalBakim"); // Kapatma (X) ikonu
+        const cancelBtn = modal.querySelector(".cancel-bakim"); // İptal butonu
+
+        // Açma
+        openBtn.addEventListener("click", function () {
+          modal.style.display = "block";
+        });
+
+        // Kapatma (X)
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Kapatma (İptal)
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Dışa tıklanınca kapat
+        window.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // GÖREV EKLE BUTONU
+      document.addEventListener("DOMContentLoaded", function () {
+        const taskModal = document.getElementById("taskModalAna");
+        const openTaskModalBtn = document.getElementById("openTaskModalBtn");
+        const closeTaskModalSpan = taskModal.querySelector(".custom-modal-close");
+        const cancelTaskModalBtn = taskModal.querySelector(".custom-modal-button");
+
+        if (openTaskModalBtn) {
+          openTaskModalBtn.onclick = () => (taskModal.style.display = "flex");
+        }
+
+        if (closeTaskModalSpan) {
+          closeTaskModalSpan.onclick = () => (taskModal.style.display = "none");
+        }
+
+        if (cancelTaskModalBtn) {
+          cancelTaskModalBtn.onclick = () => (taskModal.style.display = "none");
+        }
+
+        window.onclick = function (event) {
+          if (event.target === taskModal) {
+            taskModal.style.display = "none";
+          }
+        };
+
+        // GÖREV EKLE FORMU İŞLEMLERİ
+        const taskForm = document.querySelector("#taskModalAna form");
+        if (taskForm) {
+          taskForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const task = {
+              title: document.getElementById("taskTitle").value.trim(),
+              description: document.getElementById("taskDescription").value.trim(),
+              tank: document.getElementById("taskTank").value,
+              category: document.getElementById("taskCategory").value,
+              priority: document.getElementById("taskPriority").value,
+              date: document.getElementById("taskDate").value,
+              time: document.getElementById("taskTime").value,
+              isRecurring: document.getElementById("recurringTask").checked,
+            };
+
+            console.log("Yeni Görev:", task);
+
+            taskForm.reset();
+            taskModal.style.display = "none";
+          });
+        }
+
+        // görev ekle tekrarlanan görev
+        document.getElementById("recurringTask").addEventListener("change", function () {
+          const options = document.getElementById("recurringOptions");
+          options.style.display = this.checked ? "block" : "none";
+        });
+      });
+
+      // DÜZENLE BUTONU
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tank Düzenle Modalını Açma/Kapama
+        const editTankModal = document.getElementById("editTankModal");
+        const openEditTankModalBtn = document.getElementById("openEditTankModalBtn");
+        const closeEditTankModalSpan = editTankModal.querySelector(".close");
+        const cancelEditTankModalBtn = editTankModal.querySelector(".modal-button");
+
+        openEditTankModalBtn.onclick = () => (editTankModal.style.display = "flex");
+        closeEditTankModalSpan.onclick = () => (editTankModal.style.display = "none");
+        cancelEditTankModalBtn.onclick = () => (editTankModal.style.display = "none");
+
+        window.onclick = function (event) {
+          if (event.target === editTankModal) {
+            editTankModal.style.display = "none";
+          }
+        };
+
+        // Form Gönderimi (Örnek)
+        const editTankForm = document.querySelector("#editTankModal form");
+        editTankForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = {
+            tankName: document.getElementById("editTankName").value,
+            tankCapacity: document.getElementById("editTankCapacity").value,
+            maleName: document.getElementById("maleName").value,
+            femaleName: document.getElementById("femaleName").value,
+            notes: document.getElementById("notes").value,
+            // Dosyalar burada işlenmez, sunucuya gönderilmesi gerekir
+          };
+          console.log("Tank Güncelleme Bilgileri:", formData);
+          alert("Tank bilgileri güncellendi!");
+          editTankModal.style.display = "none";
+        });
+
+        // Resim Önizleme ve Silme İşlevselliği
+        function setupImageUpload(inputElementId, previewElementId) {
+          const input = document.getElementById(inputElementId);
+          const preview = document.getElementById(previewElementId);
+          const deleteBtn = preview.nextElementSibling;
+
+          input.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+                if (deleteBtn) deleteBtn.style.display = "block";
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+
+          if (deleteBtn) {
+            deleteBtn.addEventListener("click", function () {
+              preview.src = "";
+              preview.style.display = "none";
+              input.value = "";
+              deleteBtn.style.display = "none";
+            });
+          }
+        }
+
+        setupImageUpload("malePhotoUpload", "malePhotoPreview");
+        setupImageUpload("femalePhotoUpload", "femalePhotoPreview");
+      });
+
+      // SİL BUTONU
+      const openDeleteModalBtn = document.getElementById("openDeleteModalBtn");
+      const deleteModalOverlay = document.querySelector(".delete-modal-overlay");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const cancelModalBtn = document.getElementById("cancelModalBtn");
+
+      function openModal() {
+        deleteModalOverlay.style.display = "flex";
+        setTimeout(() => {
+          deleteModalOverlay.classList.add("visible");
+        }, 10);
+      }
+
+      function closeModal() {
+        deleteModalOverlay.classList.remove("visible");
+        deleteModalOverlay.addEventListener(
+          "transitionend",
+          function handler() {
+            deleteModalOverlay.style.display = "none";
+            deleteModalOverlay.removeEventListener("transitionend", handler);
+          },
+          { once: true }
+        );
+      }
+
+      openDeleteModalBtn.addEventListener("click", openModal);
+      closeModalBtn.addEventListener("click", closeModal);
+      cancelModalBtn.addEventListener("click", closeModal);
+
+      deleteModalOverlay.addEventListener("click", (event) => {
+        if (event.target === deleteModalOverlay) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && deleteModalOverlay.classList.contains("visible")) {
+          closeModal();
+        }
+      });
+
+      // su parametreleri düzenle butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("editModal");
+        const openBtn = document.getElementById("editButton");
+        const closeBtn = document.getElementById("closeModal");
+        const cancelBtn = document.querySelector(".cancel-parametre");
+
+        // Butona tıklayınca modal'ı aç
+        openBtn.addEventListener("click", function (event) {
+          event.preventDefault(); // Sayfanın yukarı kaymasını engelle
+          modal.style.display = "block";
+        });
+
+        // Kapatma ikonuna tıklanınca modal'ı kapat
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // İptal butonuna tıklanınca modal'ı kapat
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Modal dışına tıklanınca kapat
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // su parametreleri sil butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteBtn = document.getElementById("deleteButton");
+
+        deleteBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const confirmed = confirm("Bu kaydı silmek istediğinize emin misiniz?");
+
+          if (confirmed) {
+            console.log("Kayıt silindi!");
+          } else {
+            console.log("Silme işlemi iptal edildi.");
+          }
+        });
+      });
+
+      // yemleme düzenle butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("editModalYemleme");
+        const openBtn = document.getElementById("editButtonYemleme");
+        const closeBtn = document.getElementById("closeModalYemleme");
+        const cancelBtn = document.querySelector(".cancel-yemleme");
+
+        // Butona tıklayınca modal'ı aç
+        openBtn.addEventListener("click", function (event) {
+          event.preventDefault(); // Sayfanın yukarı kaymasını engelle
+          modal.style.display = "block";
+        });
+
+        // Kapatma ikonuna tıklanınca modal'ı kapat
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // İptal butonuna tıklanınca modal'ı kapat
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Modal dışına tıklanınca kapat
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // yemleme sil butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteBtn = document.getElementById("deleteButtonYemleme");
+
+        deleteBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const confirmed = confirm("Bu kaydı silmek istediğinize emin misiniz?");
+
+          if (confirmed) {
+            console.log("Kayıt silindi!");
+          } else {
+            console.log("Silme işlemi iptal edildi.");
+          }
+        });
+      });
+
+      // bakim düzenle butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("editModalBakim");
+        const openBtn = document.getElementById("editButtonBakim");
+        const closeBtn = document.getElementById("closeModalBakim");
+        const cancelBtn = document.querySelector(".cancel-bakim");
+
+        // Butona tıklayınca modal'ı aç
+        openBtn.addEventListener("click", function (event) {
+          event.preventDefault(); // Sayfanın yukarı kaymasını engelle
+          modal.style.display = "block";
+        });
+
+        // Kapatma ikonuna tıklanınca modal'ı kapat
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // İptal butonuna tıklanınca modal'ı kapat
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Modal dışına tıklanınca kapat
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // bakim sil butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteBtn = document.getElementById("deleteButtonBakim");
+
+        deleteBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const confirmed = confirm("Bu kaydı silmek istediğinize emin misiniz?");
+
+          if (confirmed) {
+            console.log("Kayıt silindi!");
+          } else {
+            console.log("Silme işlemi iptal edildi.");
+          }
+        });
+      });
+
+      // görev düzenle butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("editModalGorev");
+        const openBtn = document.getElementById("editButtonGorev");
+        const closeBtn = document.getElementById("closeModalGorev");
+        const cancelBtn = document.querySelector(".cancel-gorev");
+
+        // Butona tıklayınca modal'ı aç
+        openBtn.addEventListener("click", function (event) {
+          event.preventDefault(); // Sayfanın yukarı kaymasını engelle
+          modal.style.display = "block";
+        });
+
+        // Kapatma ikonuna tıklanınca modal'ı kapat
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // İptal butonuna tıklanınca modal'ı kapat
+        cancelBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        // Modal dışına tıklanınca kapat
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+
+        // görev ekle tekrarlanan görev
+        document.getElementById("recurringTaskTwo").addEventListener("change", function () {
+          const options = document.getElementById("recurringOptionsTwo");
+          options.style.display = this.checked ? "block" : "none";
+        });
+      });
+
+      // görev sil butonu
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteBtn = document.getElementById("deleteButtonGorev");
+
+        deleteBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const confirmed = confirm("Bu kaydı silmek istediğinize emin misiniz?");
+
+          if (confirmed) {
+            console.log("Kayıt silindi!");
+          } else {
+            console.log("Silme işlemi iptal edildi.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

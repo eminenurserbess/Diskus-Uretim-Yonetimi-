@@ -1,0 +1,738 @@
+/* Genel Ayarlamalar (Değişiklik yok) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: #2d3748;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 1. KISIM: Başlık ve Tank Ekle Butonu */
+/* Bu bölümü orijinal haline getiriyoruz */
+.header {
+  display: flex;
+  justify-content: space-between; /* Butonun sağa hizalanması için */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h1 i {
+  font-size: 24px;
+  color: #718096;
+}
+
+.add-tank-btn {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-tank-btn:hover {
+  background: #043779;
+}
+
+.summary {
+  color: #718096;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* 2. KISIM TANK BİLGİLERİ (Değişiklik yok) */
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  flex: 1;
+  min-width: 150px; /* Adjusted for better distribution */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 1px solid #edf2f7; /* Added border */
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 10px;
+}
+
+.stat-card .count {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.stat-card:nth-child(2) .count {
+  color: #805ad5; /* Üreme - Purple */
+}
+.stat-card:nth-child(3) .count {
+  color: #38a169; /* Boylandırma - Green */
+}
+.stat-card:nth-child(4) .count {
+  color: #3182ce; /* Ana Tank - Blue */
+}
+.stat-card:nth-child(5) .count {
+  color: #718096; /* Boş - Gray */
+}
+.stat-card:nth-child(6) .count {
+  color: #e53e3e; /* Karantina - Red */
+}
+
+/* 3. KISIM FİLTRELEME (Değişiklik yok) */
+.filter-container {
+  /* Bu bir önceki adımdan eklenen yeni kapsayıcı, mobil ayarları için kullanılacak */
+  margin-bottom: 30px; /* Alt boşluğu masaüstünde de koruyalım */
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px; /* Padding'i artırarak içeriği kutu içinde daha iyi konumlandırın */
+  border: 1px solid #edf2f7; /* Hafif bir kenarlık ekleyin */
+  border-radius: 10px; /* Köşeleri yuvarlayın */
+  background-color: white; /* Arka planı beyaz yapın */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Hafif bir gölge ekleyin */
+}
+
+.filter-section i {
+  color: #718096;
+  font-size: 18px;
+}
+
+.filter-section select {
+  padding: 12px 20px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 15px;
+  color: #4a5568;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%234a5568" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  min-width: 250px; /* Masaüstünde yeterli genişlik */
+  width: auto; /* Otomatik genişlik ayarlansın */
+}
+
+/* 4. KISIM TANK KARTLARI (Değişiklik yok) */
+.tank-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(230px, 1fr)
+  ); /* Genişlik 230px'e düşürülerek bir satıra daha fazla kart sığdırıldı */
+  gap: 20px;
+}
+
+.tank-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Daha belirgin gölge */
+  border: 1px solid #e2e8f0; /* Hafif kenarlık */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* İçerik taşmasını engellemek için */
+}
+
+.tank-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Başlık ve ikonu aynı hizada tutmak için */
+  margin-bottom: 10px; /* Badge ile arasına boşluk bırak */
+}
+
+.tank-card-header h2 {
+  font-size: 18px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.tank-card-header .favorite-icon {
+  color: #a0aec0; /* Varsayılan olarak gri bir yıldız */
+  font-size: 20px; /* Daha büyük ikon */
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease; /* Hover efekti için */
+}
+
+/* Favoriye eklenmiş yıldız */
+.tank-card-header .favorite-icon.favorited {
+  color: #ffc107; /* Dolu olduğunda sarı */
+}
+
+/* Hover efekti (favorili veya değil farketmez) */
+.tank-card-header .favorite-icon:hover {
+  transform: scale(1.1); /* Üzerine gelince biraz büyüsün */
+  color: #718096; /* Hover'da biraz daha koyu gri, favorili ise değişmesin */
+}
+.tank-card-header .favorite-icon.favorited:hover {
+  color: #e0a800; /* Favorili yıldızın hover rengi */
+}
+
+.tank-type-badge {
+  display: inline-block;
+  padding: 6px 12px; /* Daha fazla dolgu */
+  border-radius: 20px;
+  font-size: 14px; /* Biraz daha büyük yazı */
+  font-weight: 600;
+  margin-bottom: 15px; /* Detaylarla arasına boşluk */
+}
+
+.tank-type-badge.ureme {
+  background: #ede9fe;
+  color: #805ad5;
+}
+.tank-type-badge.boylandirma {
+  background: #e6fffa;
+  color: #38a169;
+}
+.tank-type-badge.karantina {
+  background: #fee2e2;
+  color: #e53e3e;
+}
+.tank-type-badge.ana-tank {
+  background: #ebf8ff;
+  color: #3182ce;
+}
+.tank-type-badge.bos {
+  /* Yeni eklendi */
+  background: #e2e8f0; /* Açık gri */
+  color: #718096; /* Koyu gri yazı */
+}
+
+.tank-details {
+  flex-grow: 1;
+}
+
+.detail-item {
+  margin-bottom: 12px; /* Detaylar arasında daha fazla boşluk */
+  display: flex; /* İçeriği hizalamak için flex kullan */
+  justify-content: space-between; /* Etiket ve değeri ayır */
+  align-items: center; /* Dikeyde ortala */
+}
+
+.detail-item.next-water-change {
+  display: flex;
+  flex-direction: column; /* İkon ve metni alt alta almak için */
+  align-items: flex-start; /* Sola hizala */
+  margin-bottom: 15px;
+}
+
+.detail-item.next-water-change h4 {
+  margin-bottom: 5px; /* Başlık ile tarih arasına boşluk */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* İkon ile metin arasına boşluk */
+  font-size: 14px;
+}
+
+.detail-item.next-water-change h4 i {
+  color: #718096;
+  font-size: 16px;
+}
+
+.detail-item h4 {
+  font-size: 15px; /* Daha belirgin etiketler */
+  color: #718096;
+  margin-bottom: 0; /* Flexbox kullanıldığı için */
+}
+
+.detail-item p {
+  font-size: 16px; /* Daha belirgin değerler */
+  color: #2d3748;
+  font-weight: 600; /* Daha kalın */
+}
+
+.breeding-pair-section {
+  background-color: #ede9fe; /* Resimdeki kutunun arka plan rengi */
+  border: 1px solid #d6bcfa; /* Hafif mor kenarlık */
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 15px; /* Üstteki detaylarla arasına boşluk */
+  margin-bottom: 15px; /* Altındaki butonlarla arasına boşluk */
+}
+
+.breeding-pair-section h4 {
+  font-size: 14px;
+  color: #805ad5; /* Mor renk */
+  margin-bottom: 15px; /* Başlık ile resimler arasına boşluk */
+  font-weight: 600;
+}
+
+.breeding-pair-images {
+  display: flex;
+  gap: 15px; /* Resimler arasına boşluk */
+  justify-content: center; /* Ortala */
+}
+
+.breeding-pair-item {
+  text-align: center;
+}
+
+.breeding-pair-item img {
+  width: 80px; /* Resim boyutu */
+  height: 80px;
+  border-radius: 8px; /* Köşeleri yuvarlak */
+  object-fit: cover; /* Resmin kutuya sığmasını sağla */
+  border: 2px solid #805ad5; /* Resim etrafında mor çerçeve */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}
+
+.breeding-pair-item p {
+  font-size: 13px;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.tank-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #edf2f7;
+}
+
+.tank-actions .details-btn {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 12px 20px; /* Daha büyük buton */
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-grow: 1; /* Make button fill available space */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Butona hafif gölge */
+}
+
+.tank-actions .details-btn:hover {
+  background: #043779;
+}
+
+.tank-actions .edit-icon-btn {
+  background: none;
+  border: none;
+  color: #a0aec0;
+  font-size: 22px; /* Daha büyük ikon */
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 5px; /* Tıklama alanı için padding */
+}
+
+.tank-actions .edit-icon-btn:hover {
+  color: #4a5568;
+}
+
+/* 5. KISIM TANK EKLE BUTONU (Değişiklik yok) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #2d3748;
+  font-size: 20px;
+  text-align: center;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4a5568;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #2d3748;
+  box-sizing: border-box;
+}
+
+.modal-content select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%234a5568" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.modal-button,
+.modal-submit {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border: none;
+}
+
+.modal-button {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.modal-button:hover {
+  background-color: #cbd5e0;
+}
+
+.modal-submit {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.modal-submit:hover {
+  background-color: #1366d3;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* MEDYA SORGULARI (MOBİL UYUMLULUK İÇİN) */
+
+@media (max-width: 768px) {
+  body {
+    padding: 15px; /* Mobil cihazlarda kenar boşluğunu azalt */
+  }
+
+  .container {
+    padding: 0; /* Konteynerin kendi padding'ini kaldır, body padding'i yeterli */
+  }
+
+  /* 1. KISIM: Başlık ve Buton */
+  /* page-header yerine header sınıfını hedefliyoruz */
+  .header {
+    flex-direction: column; /* Başlık ve butonu alt alta getir */
+    align-items: flex-start; /* Sola hizala */
+    gap: 15px; /* Aralarındaki boşluğu artır */
+  }
+
+  .header h1 {
+    font-size: 24px; /* Başlık fontunu küçült */
+  }
+
+  .header h1 i {
+    font-size: 20px; /* Ok ikonu boyutunu küçült */
+  }
+
+  .add-tank-btn {
+    width: 100%; /* Butonu tam genişlik yap */
+    justify-content: center; /* İçeriğini ortala */
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+
+  .summary {
+    font-size: 14px; /* Özet metin boyutunu küçült */
+    margin-bottom: 15px;
+  }
+
+  /* 2. KISIM: İstatistik Kartları */
+  .stats-container {
+    flex-direction: column; /* İstatistik kartlarını alt alta getir */
+    gap: 10px; /* Kartlar arası boşluğu azalt */
+  }
+
+  .stat-card {
+    min-width: unset; /* Minimum genişliği kaldır, esnek olsun */
+    width: 100%; /* Tam genişlik kaplasın */
+    padding: 12px; /* İç boşluğu azalt */
+  }
+
+  .stat-card h3 {
+    font-size: 13px; /* Başlık fontunu küçült */
+  }
+
+  .stat-card .count {
+    font-size: 20px; /* Sayı fontunu küçült */
+  }
+
+  /* 3. KISIM: Filtreleme */
+  .filter-container {
+    padding: 0 10px; /* Filtreleme kapsayıcısına yanlardan boşluk ver */
+    margin-bottom: 20px; /* Alt boşluğu ayarla */
+  }
+
+  .filter-section {
+    flex-direction: column; /* İkonu ve select'i alt alta getir */
+    align-items: flex-start; /* Sola hizala */
+    padding: 15px; /* İç boşluğu azalt */
+    gap: 8px; /* Elemanlar arası boşluğu azalt */
+    width: 100%; /* Tam genişlik yap */
+    box-sizing: border-box; /* Padding'in genişliği etkilememesi için */
+  }
+
+  .filter-section i {
+    font-size: 16px; /* İkon boyutunu küçült */
+    margin-bottom: 5px; /* İkonun altındaki boşluğu ayarla */
+  }
+
+  .filter-section select {
+    width: 100%; /* Select kutusunu tam genişlik yap */
+    min-width: unset; /* Minimum genişliği kaldır */
+    font-size: 14px; /* Font boyutunu küçült */
+    padding: 10px 15px; /* İç boşluğu ayarla */
+    background-position: right 10px center; /* Ok ikonunun yerini ayarla */
+    background-size: 16px; /* Ok ikonunun boyutunu küçült */
+    box-sizing: border-box; /* Padding'in genişliği etkilememesi için */
+  }
+
+  /* 4. KISIM: Tank Kartları */
+  .tank-grid {
+    grid-template-columns: 1fr; /* Kartları tek sütuna indir */
+    gap: 15px; /* Kartlar arası boşluğu azalt */
+  }
+
+  .tank-card {
+    padding: 15px; /* İç boşluğu azalt */
+  }
+
+  .tank-card-header h2 {
+    font-size: 16px; /* Kart başlık fontunu küçült */
+  }
+
+  .tank-card-header .favorite-icon {
+    font-size: 18px; /* Yıldız ikonu boyutunu küçült */
+  }
+
+  .tank-type-badge {
+    padding: 5px 10px; /* Rozet dolgusunu azalt */
+    font-size: 13px; /* Rozet fontunu küçült */
+    margin-bottom: 10px;
+  }
+
+  .detail-item {
+    margin-bottom: 10px; /* Detaylar arası boşluğu azalt */
+    flex-direction: column; /* Kapasite gibi detayları alt alta getir */
+    align-items: flex-start; /* Sola hizala */
+  }
+
+  .detail-item h4 {
+    font-size: 13px; /* Detay etiketi fontunu küçült */
+    margin-bottom: 3px;
+  }
+
+  .detail-item p {
+    font-size: 14px; /* Detay değeri fontunu küçült */
+  }
+
+  .detail-item.next-water-change {
+    margin-bottom: 10px; /* Su değişimi detay boşluğunu azalt */
+  }
+
+  .detail-item.next-water-change h4 {
+    font-size: 13px; /* Su değişimi başlık fontunu küçült */
+    gap: 5px;
+  }
+
+  .detail-item.next-water-change h4 i {
+    font-size: 14px; /* Su değişimi ikonu boyutunu küçült */
+  }
+
+  .breeding-pair-section {
+    padding: 10px; /* Üreme çifti bölümü dolgusunu azalt */
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .breeding-pair-section h4 {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .breeding-pair-images {
+    flex-direction: column; /* Üreme çifti resimlerini alt alta getir */
+    gap: 10px; /* Resimler arası boşluğu azalt */
+  }
+
+  .breeding-pair-item img {
+    width: 60px; /* Resim boyutunu küçült */
+    height: 60px;
+  }
+
+  .breeding-pair-item p {
+    font-size: 12px; /* Resim altı yazı fontunu küçült */
+  }
+
+  .tank-actions {
+    flex-direction: column; /* Butonları alt alta getir */
+    gap: 8px; /* Butonlar arası boşluğu azalt */
+    padding-top: 10px;
+  }
+
+  .tank-actions .details-btn {
+    width: 100%; /* Detaylar butonunu tam genişlik yap */
+    padding: 10px 15px; /* Buton dolgusunu azalt */
+    font-size: 15px;
+  }
+
+  .tank-actions .edit-icon-btn {
+    font-size: 20px; /* Düzenleme ikonu boyutunu küçült */
+  }
+}
+
+/* 5. KISIM: Modal (Tank Ekle) */
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 20px; /* Modal iç boşluğunu azalt */
+    width: 95%; /* Mobil cihazlarda daha geniş olsun */
+  }
+
+  .modal-content h2 {
+    font-size: 18px; /* Modal başlık fontunu küçült */
+    margin-bottom: 15px;
+  }
+
+  .modal-content label {
+    font-size: 13px; /* Etiket fontunu küçült */
+    margin-bottom: 5px;
+  }
+
+  .modal-content input[type="text"],
+  .modal-content input[type="number"],
+  .modal-content select {
+    padding: 8px 10px; /* Input/select boşluklarını azalt */
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .modal-content select {
+    background-position: right 8px center; /* Select ok ikonunun yerini ayarla */
+    background-size: 16px; /* Select ok ikonunun boyutunu küçült */
+  }
+
+  .modal-buttons {
+    flex-direction: column; /* Butonları alt alta getir */
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .modal-button,
+  .modal-submit {
+    width: 100%; /* Butonları tam genişlik yap */
+    padding: 10px 15px; /* Buton dolgusunu azalt */
+    font-size: 14px;
+  }
+
+  .close {
+    font-size: 24px; /* Kapatma ikonu boyutunu ayarla */
+    top: 15px;
+    right: 15px;
+  }
+
+  /* Tank Kurulum Durumu kutusu */
+  #kurulumDurumu {
+    padding: 10px;
+  }
+  #kurulumDurumu small {
+    font-size: 11px; /* Bilgi metni fontunu küçült */
+  }
+  #kurulumDurumu div:nth-child(3) {
+    /* Bilgi kutusu */
+    font-size: 12px !important;
+    padding: 6px;
+  }
+}
+
+/* Çok küçük telefon ekranları için son ayarlamalar */
+@media (max-width: 420px) {
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .add-tank-btn {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .tank-card-header h2 {
+    font-size: 15px;
+  }
+}

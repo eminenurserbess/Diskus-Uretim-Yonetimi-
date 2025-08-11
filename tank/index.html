@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diskus Üretim Yönetimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Diskus Üretim Yönetimi</h1>
+      <p class="subtitle">Tankları ve üretim sürecinizi takip edin</p>
+
+      <div class="card-row">
+        <a href="toplam-tank.html" class="card blue">
+          <div class="card-title">Toplam Tank</div>
+          <div class="card-bottom">
+            <span class="count">4</span>
+            <i class="fa-solid fa-fish"></i>
+          </div>
+        </a>
+
+        <a href="ureme-tank.html" class="card purple">
+          <div class="card-title">Aktif Üreme</div>
+          <div class="card-bottom">
+            <span class="count">1</span>
+            <i class="fa-solid fa-wave-square"></i>
+          </div>
+        </a>
+
+        <a href="boylandirma-tank.html" class="card green">
+          <div class="card-title">Boylandırma</div>
+          <div class="card-bottom">
+            <span class="count">1</span>
+            <i class="fa-solid fa-temperature-three-quarters"></i>
+          </div>
+        </a>
+
+        <a href="su-degisimi.html" class="card orange">
+          <div class="card-title">Su Değişimi Gerekli</div>
+          <div class="card-bottom">
+            <span class="count">0</span>
+            <i class="fa-solid fa-droplet"></i>
+          </div>
+        </a>
+
+        <a href="bekleyen-gorevler.html" class="card blue">
+          <div class="card-title">Bekleyen Görevler</div>
+          <div class="card-bottom">
+            <span class="count">3</span>
+            <i class="fa-solid fa-square-check"></i>
+          </div>
+          <div class="late-text">1 geciken</div>
+        </a>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab-navigation">
+          <button class="active" onclick="showTab('favorites', this)">
+            <i class="fa-solid fa-star"></i>
+            Favori Tanklar
+            <span class="count">Sıralama</span>
+          </button>
+          <button onclick="showTab('tasks', this)">
+            <i class="fa-solid fa-square-check"></i>
+            Görevler
+            <span class="count">3</span>
+          </button>
+        </div>
+
+        <div class="tab-content active" id="favorites">
+          <div class="favorite-tanks-header">
+            <h2>Favori Tanklar</h2>
+            <button class="add-tank-btn" id="openTankModalBtn">
+              <i class="fas fa-plus"></i>
+              Tank Ekle
+            </button>
+          </div>
+          <div class="no-favorites-message">
+            <i class="fa-solid fa-arrow-up-down"></i>
+            <img src="image/favourite.png" alt="Favori tank bulunmuyor" width="40" height="40" />
+            <h3>Favori tank bulunmuyor</h3>
+            <p>Tankları favorilere eklemek için yıldız ikonuna tıklayın!</p>
+          </div>
+          <div class="favorite-tanks-list"></div>
+        </div>
+
+        <!-- Görevler Kısmı -->
+        <div class="tab-content" id="tasks">
+          <div class="tasks-header">
+            <h2>Görev Yönetimi</h2>
+            <button class="add-task-btn" id="openTaskModalBtn">
+              <i class="fas fa-plus"></i>
+              Görev Ekle
+            </button>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-section">
+              <i class="fas fa-filter"></i>
+              <select>
+                <option>Tüm Görevler</option>
+                <option>Bekleyen</option>
+                <option>Tamamlanan</option>
+                <option>Geciken</option>
+              </select>
+
+              <select>
+                <option>Tüm Tanklar</option>
+                <option>Genel Görevler</option>
+                <option>Ana Üretim Tankı</option>
+                <option>Boylandırma Tank 1</option>
+                <option>Karantina Tank</option>
+                <option>Ana Tank 2 (Yeni Kurulum)</option>
+                <option>Boylandırma Tank 2</option>
+                <option>Sergi Tankı</option>
+                <option>Boş Tank (Hazırlık)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- GÖREV KARTI -->
+          <div class="task-header" style="display: flex; align-items: center; gap: 8px">
+            <strong>Üretim Tankı Su Değişimi</strong>
+            <span
+              style="background-color: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 12px; font-size: 12px"
+            >
+              Yüksek
+            </span>
+            <div class="task-actions" style="margin-left: auto">
+              <a href="#" class="fa-solid fa-pen-to-square edit-icon" id="editButtonGorev"></a>
+              <a href="#" class="fa-solid fa-trash delete-icon" id="deleteButtonGorev"></a>
+            </div>
+          </div>
+          <div class="task-body">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+              <div>
+                <p style="margin: 4px 0; color: #334155">%50 su değişimi - üretim döneminde kritik</p>
+                <div class="task-info">
+                  <span class="info-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>8 Tem 2025 14:16</span>
+                  </span>
+                  <span class="info-item">
+                    <i class="fas fa-map-pin konum" style="color: #ba3615"></i>
+                    <span>Ana Üretim Tankı</span>
+                  </span>
+                  <span class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Her 1 gün</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-card">
+            <p>Henüz görev bulunmuyor.</p>
+          </div>
+
+          <!-- düzenle butonu görev Modal -->
+          <div class="modal-edit" id="editModalGorev">
+            <div class="modal-edit-content">
+              <span class="modal-edit-close" id="closeModalGorev">&times;</span>
+              <h2>Görevi Düzenle</h2>
+
+              <div class="form-group">
+                <label for="taskTitle">Başlık</label>
+                <input type="text" id="taskTitle" value="Üretim Tankı Su Değişimi" />
+              </div>
+
+              <div class="form-group">
+                <label for="taskDescription">Açıklama</label>
+                <textarea id="taskDescription" rows="4">%50 su değişimi - üretim döneminde kritik</textarea>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="input-group">
+                    <label for="taskTank">Tank</label>
+                    <select id="taskTank">
+                      <option>Genel Görev</option>
+                      <option selected>Ana Üretim Tankı</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label for="taskCategory">Kategori</label>
+                    <select id="taskCategory">
+                      <option>Diğer</option>
+                      <option>Yemleme</option>
+                      <option>Bakım</option>
+                      <option>İzleme</option>
+                      <option>Üreme</option>
+                      <option>Azot Döngüsü</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="input-group">
+                    <label for="taskPriority">Öncelik</label>
+                    <select id="taskPriority">
+                      <option>Düşük</option>
+                      <option>Orta</option>
+                      <option selected>Yüksek</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label for="taskDate">Tarih</label>
+                    <div class="input-with-icon">
+                      <input type="date" id="taskDate" value="2025-07-08" />
+                      <i class="fas fa-calendar-alt"></i>
+                    </div>
+                  </div>
+                  <div class="input-group">
+                    <label for="taskTime">Saat</label>
+                    <div class="input-with-icon">
+                      <input type="time" id="taskTime" value="14:16" />
+                      <i class="fas fa-clock"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="custom-checkbox-group">
+                <input type="checkbox" id="recurringTaskTwo" />
+                <label for="recurringTaskTwo">Tekrarlanan görev</label>
+              </div>
+              <!-- Tekrarlama Ayarları (Başlangıçta Gizli) -->
+              <div id="recurringOptionsTwo" style="display: none; margin-top: 5px">
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class="input-group">
+                      <label for="repeatType">Tekrarlama Türü</label>
+                      <select id="repeatType">
+                        <option>Günlük</option>
+                        <option>Saatlik</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="repeatInterval">Aralık</label>
+                      <input type="number" id="repeatInterval" value="1" min="1" />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    margin-top: 8px;
+                    font-size: 13px;
+                    color: #174491;
+                    background-color: #e6f0ff;
+                    padding: 8px;
+                    border-radius: 5px;
+                  "
+                >
+                  <strong>Örnek:</strong>
+                  Günlük tekrarlama için 1 gün arayla görev tekrarlanır.
+                </div>
+              </div>
+
+              <div class="modal-edit-buttons">
+                <button class="cancel-gorev">İptal</button>
+                <button class="update-gorev">Güncelle</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tank ekle butonu -->
+      <div id="tankModal" class="modal">
+        <div class="modal-content">
+          <span onclick="document.getElementById('tankModal').style.display='none'" class="close">&times;</span>
+          <h2>Yeni Tank Ekle</h2>
+          <form>
+            <label for="tankName">Tank Adı:</label>
+            <input type="text" id="tankName" placeholder="Örn: Ana Tank, Larva Tank 1..." />
+
+            <label for="capacity">Kapasite (Litre):</label>
+            <input type="number" id="capacity" placeholder="Örn: 200" />
+
+            <label for="tankType">Tank Türü:</label>
+            <select id="tankType">
+              <option value="empty" selected>Boş</option>
+              <option value="main">Ana Tank</option>
+              <option value="breeding">Üreme</option>
+              <option value="growing">Boylandırma</option>
+              <option value="quarantine">Karantina</option>
+            </select>
+            <div
+              id="kurulumDurumu"
+              style="
+                border: 1px solid #cbd5e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin-top: 10px;
+                background-color: #f8fafc;
+                max-width: 500px;
+                display: none; /* Başlangıçta gizli */
+              "
+            >
+              <strong style="display: block; margin-bottom: 15px; font-size: 1.1em">Tank Kurulum Durumu</strong>
+
+              <label style="display: block; margin-bottom: 15px; cursor: pointer">
+                <div style="display: flex; align-items: flex-start">
+                  <input
+                    type="radio"
+                    name="kurulum"
+                    value="yeni"
+                    style="width: 18px; height: 18px; margin-right: 10px; margin-top: 2px; cursor: pointer"
+                  />
+                  <div>
+                    <div style="font-weight: 500">Yeni Kurulum</div>
+                    <div style="color: #718096; font-size: 0.9em; margin-top: 3px">
+                      Azot döngüsü henüz oturmamış, sıfırdan başlayacak
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <label style="display: block; margin-bottom: 20px; cursor: pointer">
+                <div style="display: flex; align-items: flex-start">
+                  <input
+                    type="radio"
+                    name="kurulum"
+                    value="kurulu"
+                    checked
+                    style="width: 18px; height: 18px; margin-right: 10px; margin-top: 2px; cursor: pointer"
+                  />
+                  <div>
+                    <div style="font-weight: 500">Kurulu Tank</div>
+                    <div style="color: #718096; font-size: 0.9em; margin-top: 3px">
+                      Azot döngüsü oturmuş, balık mevcut
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <div
+                style="
+                  background-color: #ebf8ff;
+                  border-left: 4px solid #4299e1;
+                  padding: 10px 12px;
+                  font-size: 0.9em;
+                  color: #4a5568;
+                  border-radius: 0 4px 4px 0;
+                  margin-top: 5px;
+                "
+              >
+                💡
+                <strong>Bilgi:</strong>
+                Yeni kurulum seçerseniz azot döngüsü takip görevleri otomatik oluşturulur. Kurulu tank seçerseniz rutin
+                bakım görevleri oluşturulur.
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button
+                type="button"
+                class="modal-button"
+                onclick="document.getElementById('tankModal').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="modal-submit">Tank Ekle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- GÖREV EKLE BUTONU -->
+      <div id="taskModalAna" class="custom-task-modal">
+        <div class="custom-modal-content">
+          <span class="custom-modal-close" onclick="document.getElementById('taskModalAna').style.display='none'">
+            &times;
+          </span>
+          <h2>Yeni Görev Ekle</h2>
+          <form>
+            <div class="form-group">
+              <label for="taskTitle">Başlık</label>
+              <input type="text" id="taskTitle" placeholder="" />
+            </div>
+            <div class="form-group">
+              <label for="taskDescription">Açıklama</label>
+              <textarea id="taskDescription" rows="4" placeholder=""></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="taskTank">Tank</label>
+                  <select id="taskTank">
+                    <option>Genel Görev</option>
+                    <option>Ana Üretim Tankı</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <label for="taskCategory">Kategori</label>
+                  <select id="taskCategory">
+                    <option>Diğer</option>
+                    <option>Yemleme</option>
+                    <option>Bakım</option>
+                    <option>İzleme</option>
+                    <option>Üreme</option>
+                    <option>Azot Döngüsü</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="taskPriority">Öncelik</label>
+                  <select id="taskPriority">
+                    <option>Düşük</option>
+                    <option selected>Orta</option>
+                    <option>Yüksek</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="taskDate">Tarih</label>
+                  <div class="input-with-icon">
+                    <input type="date" id="taskDate" value="2025-06-28" />
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="taskTime">Saat</label>
+                  <div class="input-with-icon">
+                    <input type="time" id="taskTime" value="09:00" />
+                    <i class="fas fa-clock"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="custom-checkbox-group">
+              <input type="checkbox" id="recurringTask" />
+              <label for="recurringTask">Tekrarlanan görev</label>
+            </div>
+
+            <!-- Tekrarlama Ayarları (Başlangıçta Gizli) -->
+            <div id="recurringOptions" style="display: none; margin-top: 15px">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="input-group">
+                    <label for="repeatType">Tekrarlama Türü</label>
+                    <select id="repeatType">
+                      <option>Günlük</option>
+                      <option>Saatlik</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="repeatInterval">Aralık</label>
+                    <input type="number" id="repeatInterval" value="1" min="1" />
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  margin-top: 1px;
+                  margin-bottom: 20px;
+                  font-size: 13px;
+                  color: #174491;
+                  background-color: #e6f0ff;
+                  padding: 8px;
+                  border-radius: 5px;
+                "
+              >
+                <strong>Örnek:</strong>
+                Günlük tekrarlama için 1 gün arayla görev tekrarlanır.
+              </div>
+            </div>
+
+            <div class="custom-modal-buttons">
+              <button
+                type="button"
+                class="custom-modal-button"
+                onclick="document.getElementById('taskModalAna').style.display='none'"
+              >
+                İptal
+              </button>
+              <button type="submit" class="custom-modal-submit">Ekle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showTab(tabId, element) {
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((content) => {
+          content.style.display = "none";
+        });
+
+        const tabButtons = document.querySelectorAll(".tab-navigation button");
+        tabButtons.forEach((button) => {
+          button.classList.remove("active");
+        });
+
+        document.getElementById(tabId).style.display = "block";
+        element.classList.add("active");
+      }
+
+      // TANK EKLE BUTONU
+      document.addEventListener("DOMContentLoaded", function () {
+        const tankModal = document.getElementById("tankModal");
+        const openTankModalBtn = document.getElementById("openTankModalBtn");
+        const closeTankModalSpan = tankModal.querySelector(".close");
+        const cancelTankModalBtn = tankModal.querySelector(".modal-button");
+
+        if (openTankModalBtn) {
+          openTankModalBtn.onclick = () => (tankModal.style.display = "flex");
+        }
+
+        if (closeTankModalSpan) {
+          closeTankModalSpan.onclick = () => (tankModal.style.display = "none");
+        }
+
+        if (cancelTankModalBtn) {
+          cancelTankModalBtn.onclick = () => (tankModal.style.display = "none");
+        }
+
+        // GÖREV EKLE BUTONU
+        const taskModal = document.getElementById("taskModalAna");
+        const openTaskModalBtn = document.getElementById("openTaskModalBtn");
+        const closeTaskModalSpan = taskModal.querySelector(".custom-modal-close");
+        const cancelTaskModalBtn = taskModal.querySelector(".custom-modal-button");
+
+        if (openTaskModalBtn) {
+          openTaskModalBtn.onclick = () => (taskModal.style.display = "flex");
+        }
+
+        if (closeTaskModalSpan) {
+          closeTaskModalSpan.onclick = () => (taskModal.style.display = "none");
+        }
+
+        if (cancelTaskModalBtn) {
+          cancelTaskModalBtn.onclick = () => (taskModal.style.display = "none");
+        }
+
+        window.onclick = function (event) {
+          if (event.target === taskModal) {
+            taskModal.style.display = "none";
+          }
+        };
+
+        // GÖREV EKLE FORMU İŞLEMLERİ
+        const taskForm = document.querySelector("#taskModalAna form");
+        if (taskForm) {
+          taskForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const task = {
+              title: document.getElementById("taskTitle").value.trim(),
+              description: document.getElementById("taskDescription").value.trim(),
+              tank: document.getElementById("taskTank").value,
+              category: document.getElementById("taskCategory").value,
+              priority: document.getElementById("taskPriority").value,
+              date: document.getElementById("taskDate").value,
+              time: document.getElementById("taskTime").value,
+              isRecurring: document.getElementById("recurringTask").checked,
+            };
+
+            console.log("Yeni Görev:", task);
+
+            taskForm.reset();
+            taskModal.style.display = "none";
+          });
+        }
+
+        // tank ekle ana tank seçimi - KURULUM DURUMU GİZLEME/GÖSTERME İŞLEMİ
+        document.getElementById("tankType").addEventListener("change", function () {
+          const kurulumDiv = document.getElementById("kurulumDurumu");
+          // Sadece 'Ana Tank' seçiliyse göster, diğer durumlarda gizle
+          if (this.value === "main") {
+            kurulumDiv.style.display = "block";
+          } else {
+            kurulumDiv.style.display = "none";
+          }
+        });
+
+        // görev ekle tekrarlanan görev
+        document.getElementById("recurringTask").addEventListener("change", function () {
+          const options = document.getElementById("recurringOptions");
+          options.style.display = this.checked ? "block" : "none";
+        });
+      });
+
+      // Sekme ve favori kontrolü
+      showTab("favorites", document.querySelector(".tab-navigation button.active"));
+
+      const checkFavorites = () => {
+        const favoritesList = document.querySelector(".favorite-tanks-list");
+        const noFavorites = document.querySelector(".no-favorites-message");
+
+        if (favoritesList && favoritesList.children.length > 0) {
+          noFavorites.style.display = "none";
+        } else {
+          noFavorites.style.display = "block";
+        }
+      };
+
+      checkFavorites();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Görev Düzenle Butonu ve Modal İşlemleri
+        const modal = document.getElementById("editModalGorev");
+        const openBtn = document.getElementById("editButtonGorev");
+        const closeBtn = document.getElementById("closeModalGorev");
+        const cancelBtn = document.querySelector(".cancel-gorev");
+
+        if (openBtn) {
+          // openBtn'in varlığını kontrol etmek iyi bir pratiktir
+          openBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            modal.style.display = "flex";
+          });
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+          });
+        }
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+          });
+        }
+
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+
+        // Görev Ekle Tekrarlanan Görev
+        const recurringCheckbox = document.getElementById("recurringTaskTwo");
+        const recurringOptions = document.getElementById("recurringOptionsTwo");
+
+        if (recurringCheckbox && recurringOptions) {
+          recurringCheckbox.addEventListener("change", function () {
+            recurringOptions.style.display = this.checked ? "block" : "none";
+          });
+        }
+
+        // Görev Sil Butonu
+        const deleteBtn = document.getElementById("deleteButtonGorev");
+
+        if (deleteBtn) {
+          deleteBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const confirmed = confirm("Bu kaydı silmek istediğinize emin misiniz?");
+
+            if (confirmed) {
+              console.log("Kayıt silindi!");
+            } else {
+              console.log("Silme işlemi iptal edildi.");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
