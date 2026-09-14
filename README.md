@@ -42,17 +42,6 @@ cd Diskus-Uretim-Yonetimi-
 # index.html dosyasını tarayıcında aç
 ```
 
-## Proje Yapısı
-
-```
-Diskus-Uretim-Yonetimi-/
-├── index.html          # Ana panel
-├── tanklar/             # Tank listesi ve tür bazlı sayfalar
-├── gorevler/            # Görev listeleme ve ekleme
-├── css/
-├── js/
-└── README.md
-```
 
 ## Yol Haritası
 
