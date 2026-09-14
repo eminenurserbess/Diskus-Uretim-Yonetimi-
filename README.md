@@ -32,15 +32,6 @@ Arayüz tamamen HTML, CSS ve JavaScript ile tasarlandı. HTML ile sayfa yapısı
 
 Veriler şu an yalnızca tarayıcıda geçici olarak tutuluyor; sayfa yenilendiğinde sıfırlanıyor (proje veritabanı entegrasyonu olmadan tamamlandı).
 
-## Kurulum
-
-Projenin herhangi bir backend/derleme adımı yok — statik dosyaları klonlayıp doğrudan tarayıcıda açman yeterli.
-
-```bash
-git clone https://github.com/eminenurclsknl/Diskus-Uretim-Yonetimi-.git
-cd Diskus-Uretim-Yonetimi-
-# index.html dosyasını tarayıcında aç
-```
 
 
 ## Yol Haritası
