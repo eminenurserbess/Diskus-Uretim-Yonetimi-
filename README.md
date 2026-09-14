@@ -2,7 +2,7 @@
 
 Diskus balığı yetiştiriciliği yapan hobi sahipleri ve işletmeler için tank yönetimi, su kalitesi takibi ve görev planlamasını tek bir panelde toplayan bir web arayüzü.
 
-🔗 **GitHub:** https://github.com/eminenurclsknl/Diskus-Uretim-Yonetimi-
+🔗 **GitHub:** https://github.com/eminenurserbess/Diskus-Uretim-Yonetimi-
 
 ## Amaç
 
@@ -28,15 +28,33 @@ Diskus balıkları hassas çevresel koşullara ihtiyaç duyan özel bir türdür
 
 ## Nasıl Geliştirildi
 
-Arayüz tamamen HTML, CSS ve JavaScript ile tasarlandı. HTML ile sayfa yapısı (tank ekleme formu, su parametreleri tablosu, görev listesi) semantik etiketlerle oluşturuldu. CSS ile Diskus balığı yetiştiriciliğine uygun bir renk paleti ve responsive düzen (`@media query`) uygulandı. JavaScript ile form doğrulama, tank/görev ekleme, modal açma-kapama ve görev tamamlama işaretleme gibi etkileşimler eklendi.
+Uygulamanın arayüzü HTML5, CSS3 ve JavaScript kullanılarak geliştirildi. Responsive tasarım için CSS media query yapısı kullanıldı. JavaScript ile form doğrulama, tank ve görev yönetimi, modal işlemleri ve görev durumlarının güncellenmesi sağlandı.
 
-Veriler şu an yalnızca tarayıcıda geçici olarak tutuluyor; sayfa yenilendiğinde sıfırlanıyor (proje veritabanı entegrasyonu olmadan tamamlandı).
+Veriler mevcut sürümde tarayıcı belleğinde geçici olarak tutulmaktadır. Projede henüz veritabanı veya backend entegrasyonu bulunmamaktadır.
 
+## Proje Yapısı
 
+```
+Diskus-Uretim-Yonetimi-/
+└── tank/
+    ├── index.html                    # Ana panel
+    ├── login.html                    # Giriş sayfası
+    ├── gorevler.html                 # Görev listeleme ve ekleme
+    ├── bekleyen-gorevler.html        # Bekleyen görevler
+    ├── su-degisimi.html              # Su değişimi gereken tanklar
+    ├── toplam-tank.html              # Tüm tanklar listesi
+    ├── ana-tank.html / ana-tank-detay.html
+    ├── ureme-tank.html / ureme-tank-detay.html
+    ├── boylandirma-tank.html / boylandirma-tank-detay.html
+    ├── karantina-tank.html / karantina-tank-detay.html
+    ├── bos-tank.html / bos-tank-detay.html
+    ├── css/                          # Stil dosyaları
+    └── image/                        # Görseller
+```
 
 ## Yol Haritası
 
-- [ ] Verileri kalıcı hale getirmek için veritabanı entegrasyonu (localStorage veya backend API)
-- [ ] Kullanıcı girişi / çoklu kullanıcı desteği
-- [ ] Su parametreleri için grafik/geçmiş takibi
-
+- [ ] Verilerin kalıcı olarak saklanması için backend API ve veritabanı entegrasyonu
+- [ ] Kullanıcı girişi ve çoklu kullanıcı desteği
+- [ ] Su parametreleri için grafik ve geçmiş takibi
+- [ ] Tank bakım ve yemleme geçmişinin raporlanması
