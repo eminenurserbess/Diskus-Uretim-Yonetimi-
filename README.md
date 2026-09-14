@@ -2,10 +2,6 @@
 
 Diskus balığı yetiştiriciliği yapan hobi sahipleri ve işletmeler için tank yönetimi, su kalitesi takibi ve görev planlamasını tek bir panelde toplayan bir web arayüzü.
 
-<!-- Ekran görüntülerini docs/ klasörüne ekleyip yollarını buraya yaz -->
-![Yeni Tank Ekle modalı](docs/tank-ekle-modal.png)
-![Yeni Görev Ekle modalı](docs/gorev-ekle-modal.png)
-
 🔗 **GitHub:** https://github.com/eminenurclsknl/Diskus-Uretim-Yonetimi-
 
 ## Amaç
